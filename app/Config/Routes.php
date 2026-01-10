@@ -48,6 +48,19 @@ $routes->group('', ['filter' => 'auth', 'namespace' => 'App\Controllers'], funct
         $routes->post('update-status/(:num)', 'Pengaduan::updateStatus/$1', ['as' => 'pengaduan.update_status']);
     });
     
+    // Publikasi - Kategori Management (Admin Only)
+    $routes->group('publikasi', ['filter' => 'auth:1'], function($routes) {
+        // Kategori
+        $routes->get('kategori', 'Publikasi::kategori', ['as' => 'publikasi.kategori']);
+        $routes->get('kategori/create', 'Publikasi::kategoriCreate', ['as' => 'publikasi.kategori.create']);
+        $routes->post('kategori/store', 'Publikasi::kategoriStore', ['as' => 'publikasi.kategori.store']);
+        $routes->get('kategori/edit/(:num)', 'Publikasi::kategoriEdit/$1', ['as' => 'publikasi.kategori.edit']);
+        $routes->post('kategori/update/(:num)', 'Publikasi::kategoriUpdate/$1', ['as' => 'publikasi.kategori.update']);
+        $routes->get('kategori/delete/(:num)', 'Publikasi::kategoriDelete/$1', ['as' => 'publikasi.kategori.delete']);
+        $routes->post('kategori/toggle/(:num)', 'Publikasi::kategoriToggle/$1', ['as' => 'publikasi.kategori.toggle']);
+    });
+
+    // Artikel/Konten Management (Admin & Publikasi)
     $routes->group('artikel', ['filter' => 'auth:1,3'], function($routes) {
         $routes->get('', 'Artikel::index', ['as' => 'artikel.index']);
         $routes->get('create', 'Artikel::create', ['as' => 'artikel.create']);
@@ -55,15 +68,10 @@ $routes->group('', ['filter' => 'auth', 'namespace' => 'App\Controllers'], funct
         $routes->get('edit/(:num)', 'Artikel::edit/$1', ['as' => 'artikel.edit']);
         $routes->post('update/(:num)', 'Artikel::update/$1', ['as' => 'artikel.update']);
         $routes->get('delete/(:num)', 'Artikel::delete/$1', ['as' => 'artikel.delete']);
-    });
-    
-    $routes->group('pengumuman', ['filter' => 'auth:1,3'], function($routes) {
-        $routes->get('', 'Pengumuman::index', ['as' => 'pengumuman.index']);
-        $routes->get('create', 'Pengumuman::create', ['as' => 'pengumuman.create']);
-        $routes->post('store', 'Pengumuman::store', ['as' => 'pengumuman.store']);
-        $routes->get('edit/(:num)', 'Pengumuman::edit/$1', ['as' => 'pengumuman.edit']);
-        $routes->post('update/(:num)', 'Pengumuman::update/$1', ['as' => 'pengumuman.update']);
-        $routes->get('delete/(:num)', 'Pengumuman::delete/$1', ['as' => 'pengumuman.delete']);
+        
+        // AJAX routes
+        $routes->post('upload-image', 'Artikel::uploadImage', ['as' => 'artikel.upload_image']);
+        $routes->post('delete-galeri/(:num)', 'Artikel::deleteGaleriImage/$1', ['as' => 'artikel.delete_galeri']);
     });
     
     $routes->group('settings', ['filter' => 'auth:1'], function($routes) {

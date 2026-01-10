@@ -46,15 +46,14 @@
     <?php endif; ?>
 
     <!-- Login Form -->
-    <!-- Login Form -->
     <form action="<?= url_to('login.attempt') ?>" method="POST">
         <?= csrf_field() ?>
 
         <!-- Username/Email Input -->
-        <div class="form-group">
+        <div class="form-group row">
             <i class="bi bi-person form-control-icon"></i>
             <input type="text" 
-                   class="form-control" 
+                   class="form-control w-100" 
                    name="login" 
                    placeholder="Username atau Email"
                    value="<?= old('login') ?>"
@@ -63,7 +62,7 @@
         </div>
 
         <!-- Password Input -->
-        <div class="form-group">
+        <div class="form-group row">
             <i class="bi bi-lock form-control-icon"></i>
             <input type="password" 
                    class="form-control" 

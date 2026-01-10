@@ -54,7 +54,7 @@ class CreatePublikasiTables extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addKey('slug');
+        // $this->forge->addKey('slug');
         $this->forge->createTable('publikasi_kategori', true);
 
         // Tabel Konten
@@ -135,7 +135,7 @@ class CreatePublikasiTables extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey('kategori_id');
         $this->forge->addKey('author_id');
-        $this->forge->addKey('slug');
+        // $this->forge->addKey('slug');
         $this->forge->addKey('status');
         $this->forge->addForeignKey('kategori_id', 'publikasi_kategori', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('author_id', 'users', 'id', 'CASCADE', 'CASCADE');
