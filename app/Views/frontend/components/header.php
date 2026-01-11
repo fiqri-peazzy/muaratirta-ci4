@@ -1,8 +1,8 @@
 <header
     x-data="{ 
-        scrolled: false,
-        mobileMenuOpen: false 
-    }"
+    scrolled: false,
+    mobileMenuOpen: false 
+}"
     @scroll.window="scrolled = window.pageYOffset > 50"
     :class="scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'"
     class="fixed w-full top-0 z-50 transition-all duration-300">
@@ -12,7 +12,7 @@
             <!-- Logo -->
             <a href="<?= base_url('/') ?>" class="flex items-center space-x-3 group">
                 <img
-                    src="<?= base_url('assets/image/logo.svg') ?>"
+                    src="<?= base_url('backend/assets/images/logo/logo.svg') ?>"
                     alt="Logo PDAM Muara Tirta"
                     class="h-12 w-auto transition-all duration-300"
                     :class="scrolled ? 'filter-none' : 'brightness-0 invert'">
@@ -38,8 +38,8 @@
                     href="<?= base_url('/') ?>"
                     class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200"
                     :class="scrolled 
-                        ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
-                        : 'text-white hover:bg-white/10'">
+                    ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
+                    : 'text-white hover:bg-white/10'">
                     Beranda
                 </a>
 
@@ -50,8 +50,8 @@
                         @click.away="open = false"
                         class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center space-x-1"
                         :class="scrolled 
-                            ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
-                            : 'text-white hover:bg-white/10'">
+                        ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
+                        : 'text-white hover:bg-white/10'">
                         <span>Profil</span>
                         <svg
                             class="w-4 h-4 transition-transform duration-200"
@@ -95,8 +95,8 @@
                         @click.away="open = false"
                         class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center space-x-1"
                         :class="scrolled 
-                            ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
-                            : 'text-white hover:bg-white/10'">
+                        ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
+                        : 'text-white hover:bg-white/10'">
                         <span>Pelanggan</span>
                         <svg
                             class="w-4 h-4 transition-transform duration-200"
@@ -137,8 +137,8 @@
                         @click.away="open = false"
                         class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center space-x-1"
                         :class="scrolled 
-                            ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
-                            : 'text-white hover:bg-white/10'">
+                        ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
+                        : 'text-white hover:bg-white/10'">
                         <span>Informasi</span>
                         <svg
                             class="w-4 h-4 transition-transform duration-200"
@@ -180,8 +180,8 @@
                     href="<?= base_url('kontak') ?>"
                     class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200"
                     :class="scrolled 
-                        ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
-                        : 'text-white hover:bg-white/10'">
+                    ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
+                    : 'text-white hover:bg-white/10'">
                     Kontak
                 </a>
             </nav>

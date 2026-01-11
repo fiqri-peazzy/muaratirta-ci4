@@ -9,13 +9,20 @@ use CodeIgniter\Router\RouteCollection;
 // Default route
 $routes->get('/', 'Home::index', ['as' => 'home']);
 
+$routes->group('pasang-baru', ['namespace' => 'App\Controllers'], function ($routes) {
+
+    $routes->get('', 'PasangBaru::index', ['as' => 'pasang_baru']);
+    $routes->post('submit', 'PasangBaru::submit', ['as' => 'pasang_baru.submit']);
+    $routes->get('sukses', 'PasangBaru::sukses', ['as' => 'pasang_baru.sukses']);
+    $routes->get('tracking', 'PasangBaru::tracking', ['as' => 'pasang_baru.tracking']);
+    $routes->post('check-status', 'PasangBaru::checkStatus', ['as' => 'pasang_baru.check_status']);
+});
+
 // Authentication Routes
 $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('login', 'Auth::index', ['as' => 'login']);
     $routes->post('login', 'Auth::attemptLogin', ['as' => 'login.attempt']);
     $routes->get('logout', 'Auth::logout', ['as' => 'logout']);
-
-    // Forgot Password (untuk phase berikutnya)
     $routes->get('forgot-password', 'Auth::forgotPassword', ['as' => 'forgot_password']);
     $routes->post('reset-password', 'Auth::resetPassword', ['as' => 'reset_password']);
 });

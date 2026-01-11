@@ -66,7 +66,7 @@
 <body class="antialiased bg-gray-50" x-data="{ mobileMenuOpen: false }">
 
     <!-- Header -->
-    <?= $this->include('components/header') ?>
+    <?= $this->include('frontend/components/header') ?>
 
     <!-- Main Content -->
     <main>
@@ -74,7 +74,7 @@
     </main>
 
     <!-- Footer -->
-    <?= $this->include('components/footer') ?>
+    <?= $this->include('frontend/components/footer') ?>
 
     <!-- Scroll to Top Button -->
     <button

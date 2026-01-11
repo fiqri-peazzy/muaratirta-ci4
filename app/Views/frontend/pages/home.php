@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/main') ?>
+<?= $this->extend('frontend/layouts/main') ?>
 
 <?= $this->section('title') ?>Beranda<?= $this->endSection() ?>
 
@@ -188,7 +188,7 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
     <div class="container mx-auto px-4">
         <div class="flex items-center space-x-4 overflow-hidden">
             <div class="flex-shrink-0 flex items-center space-x-2">
-                <img src="<?= base_url('assets/image/Logo-PDAM-MT-min.png') ?>" alt="Logo" class="h-8 w-auto">
+                <img src="<?= base_url('backend/assets/images/logo/logo.png') ?>" alt="Logo" class="h-8 w-auto">
                 <svg class="w-5 h-5 text-yellow-300 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                 </svg>
@@ -247,7 +247,7 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
                 onclick="window.location.href='<?= base_url('pasang-baru') ?>'">
                 <div class="mb-6">
                     <div class="w-20 h-20 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <img src="<?= base_url('assets/image/registration.png') ?>" alt="Pemasangan Baru" class="w-12 h-12">
+                        <img src="<?= base_url('backend/assets/images/plumbing-plumber-svgrepo-com.svg') ?>" alt="Pemasangan Baru" class="w-12 h-12">
                     </div>
                 </div>
                 <h3 class="text-xl font-display font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
