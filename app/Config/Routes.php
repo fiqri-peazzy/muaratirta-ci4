@@ -55,6 +55,15 @@ $routes->group('', ['filter' => 'auth', 'namespace' => 'App\Controllers'], funct
         $routes->post('update-status/(:num)', 'Pengaduan::updateStatus/$1', ['as' => 'pengaduan.update_status']);
     });
 
+    $routes->group('pendaftaran', ['filter' => 'auth:1,2'], function ($routes) {
+        $routes->get('', 'Pendaftaran::index', ['as' => 'pendaftaran.index']);
+        $routes->get('detail/(:num)', 'Pendaftaran::detail/$1', ['as' => 'pendaftaran.detail']);
+        $routes->post('update-status/(:num)', 'Pendaftaran::updateStatus/$1', ['as' => 'pendaftaran.update_status']);
+
+        $routes->get('export-pdf/(:num)', 'Pendaftaran::exportPdf/$1', ['as' => 'pendaftaran.export_pdf']);
+        $routes->get('export-bulk-pdf', 'Pendaftaran::exportBulkPdf', ['as' => 'pendaftaran.export_bulk_pdf']);
+    });
+
     // Publikasi - Kategori Management (Admin Only)
     $routes->group('publikasi', ['filter' => 'auth:1'], function ($routes) {
         // Kategori

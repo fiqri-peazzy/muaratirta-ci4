@@ -1,4 +1,4 @@
-<?php 
+<?php
 helper('auth');
 $currentUri = service('uri');
 $segment1 = $currentUri->getSegment(1);
@@ -60,60 +60,67 @@ $segment1 = $currentUri->getSegment(1);
                 </li>
 
                 <?php if (is_admin()): ?>
-                <!-- Admin Only Menus -->
-                <li class="sidebar-title">Manajemen Sistem</li>
+                    <!-- Admin Only Menus -->
+                    <li class="sidebar-title">Manajemen Sistem</li>
 
-                <li class="sidebar-item <?= $segment1 == 'users' ? 'active' : '' ?>">
-                    <a href="<?= base_url('/users') ?>" class='sidebar-link'>
-                        <i class="bi bi-people-fill"></i>
-                        <span>Manajemen User</span>
-                    </a>
-                </li>
+                    <li class="sidebar-item <?= $segment1 == 'users' ? 'active' : '' ?>">
+                        <a href="<?= base_url('/users') ?>" class='sidebar-link'>
+                            <i class="bi bi-people-fill"></i>
+                            <span>Manajemen User</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-item <?= $segment1 == 'publikasi' ? 'active' : '' ?>">
-                    <a href="<?= base_url('/publikasi/kategori') ?>" class='sidebar-link'>
-                        <i class="bi bi-folder"></i>
-                        <span>Kategori Publikasi</span>
-                    </a>
-                </li>
+                    <li class="sidebar-item <?= $segment1 == 'publikasi' ? 'active' : '' ?>">
+                        <a href="<?= base_url('/publikasi/kategori') ?>" class='sidebar-link'>
+                            <i class="bi bi-folder"></i>
+                            <span>Kategori Publikasi</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-item <?= $segment1 == 'settings' ? 'active' : '' ?>">
-                    <a href="<?= base_url('/settings') ?>" class='sidebar-link'>
-                        <i class="bi bi-gear-fill"></i>
-                        <span>Pengaturan</span>
-                    </a>
-                </li>
+                    <li class="sidebar-item <?= $segment1 == 'settings' ? 'active' : '' ?>">
+                        <a href="<?= base_url('/settings') ?>" class='sidebar-link'>
+                            <i class="bi bi-gear-fill"></i>
+                            <span>Pengaturan</span>
+                        </a>
+                    </li>
                 <?php endif; ?>
 
                 <?php if (has_access(['1', '2'])): ?>
-                <!-- CS & Admin Menus -->
-                <li class="sidebar-title">Layanan</li>
+                    <!-- CS & Admin Menus -->
+                    <li class="sidebar-title">Layanan</li>
 
-                <li class="sidebar-item <?= $segment1 == 'pengaduan' ? 'active' : '' ?>">
-                    <a href="<?= base_url('/pengaduan') ?>" class='sidebar-link'>
-                        <i class="bi bi-chat-dots-fill"></i>
-                        <span>Pengaduan</span>
-                    </a>
-                </li>
+                    <li class="sidebar-item <?= $segment1 == 'pengaduan' ? 'active' : '' ?>">
+                        <a href="<?= base_url('/pengaduan') ?>" class='sidebar-link'>
+                            <i class="bi bi-chat-dots-fill"></i>
+                            <span>Pengaduan</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-item">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-clipboard-check-fill"></i>
-                        <span>Layanan Pelanggan</span>
-                    </a>
-                </li>
+                    <li class="sidebar-item <?= $segment1 == 'pendaftaran' ? 'active' : '' ?>">
+                        <a href="<?= base_url('/pendaftaran') ?>" class='sidebar-link'>
+                            <i class="bi bi-person-plus-fill"></i>
+                            <span>Pendaftaran Baru</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-clipboard-check-fill"></i>
+                            <span>Layanan Pelanggan</span>
+                        </a>
+                    </li>
                 <?php endif; ?>
 
                 <?php if (has_access(['1', '3'])): ?>
-                <!-- Publikasi & Admin Menus -->
-                <li class="sidebar-title">Konten Publikasi</li>
+                    <!-- Publikasi & Admin Menus -->
+                    <li class="sidebar-title">Konten Publikasi</li>
 
-                <li class="sidebar-item <?= $segment1 == 'artikel' ? 'active' : '' ?>">
-                    <a href="<?= base_url('/artikel') ?>" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-text"></i>
-                        <span>Kelola Konten</span>
-                    </a>
-                </li>
+                    <li class="sidebar-item <?= $segment1 == 'artikel' ? 'active' : '' ?>">
+                        <a href="<?= base_url('/artikel') ?>" class='sidebar-link'>
+                            <i class="bi bi-file-earmark-text"></i>
+                            <span>Kelola Konten</span>
+                        </a>
+                    </li>
                 <?php endif; ?>
 
                 <li class="sidebar-title">Akun</li>
@@ -126,8 +133,8 @@ $segment1 = $currentUri->getSegment(1);
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="<?= base_url('/logout') ?>" class='sidebar-link' 
-                       onclick="return confirm('Apakah Anda yakin ingin logout?')">
+                    <a href="<?= base_url('/logout') ?>" class='sidebar-link'
+                        onclick="return confirm('Apakah Anda yakin ingin logout?')">
                         <i class="bi bi-box-arrow-left"></i>
                         <span>Logout</span>
                     </a>

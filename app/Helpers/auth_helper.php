@@ -18,7 +18,7 @@ if (!function_exists('get_user_data')) {
     function get_user_data($key = null)
     {
         $session = \Config\Services::session();
-        
+
         if ($key === null) {
             return [
                 'user_id'      => $session->get('user_id'),
@@ -30,8 +30,30 @@ if (!function_exists('get_user_data')) {
                 'level_name'   => $session->get('level_name'),
             ];
         }
-        
+
         return $session->get($key);
+    }
+}
+
+if (!function_exists('user_id')) {
+    /**
+     * Get current user id
+     */
+    function user_id()
+    {
+        $session = \Config\Services::session();
+        return $session->get('user_id');
+    }
+}
+
+if (!function_exists('user_name')) {
+    /**
+     * Get current user name
+     */
+    function user_name()
+    {
+        $session = \Config\Services::session();
+        return $session->get('nm_lengkap') ?? $session->get('username');
     }
 }
 
@@ -83,12 +105,12 @@ if (!function_exists('has_access')) {
     function has_access($allowedLevels = [])
     {
         $userLevel = user_level();
-        
+
         // Admin always has access
         if ($userLevel == '1') {
             return true;
         }
-        
+
         return in_array($userLevel, $allowedLevels);
     }
 }
@@ -101,7 +123,7 @@ if (!function_exists('profile_picture')) {
     {
         $session = \Config\Services::session();
         $profilePict = $session->get('profile_pict') ?? 'default.png';
-        
+
         return base_url('uploads/profiles/' . $profilePict);
     }
 }
@@ -114,14 +136,14 @@ if (!function_exists('user_initials')) {
     {
         $session = \Config\Services::session();
         $name = $session->get('nm_lengkap') ?? 'User';
-        
+
         $words = explode(' ', $name);
         $initials = '';
-        
+
         foreach ($words as $word) {
             $initials .= strtoupper(substr($word, 0, 1));
         }
-        
+
         return substr($initials, 0, 2);
     }
 }
