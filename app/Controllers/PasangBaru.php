@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\Pendaftaran;
+use App\Models\PendaftaranModel;
 
 class PasangBaru extends BaseController
 {
@@ -12,7 +12,7 @@ class PasangBaru extends BaseController
 
     public function __construct()
     {
-        $this->pendaftaranModel = new Pendaftaran();
+        $this->pendaftaranModel = new PendaftaranModel();
         $this->session = \Config\Services::session();
         helper(['form', 'url', 'filesystem']);
     }

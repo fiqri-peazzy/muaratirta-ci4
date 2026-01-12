@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Kategori extends Model
+class KategoriModel extends Model
 {
     protected $table            = 'publikasi_kategori';
     protected $primaryKey       = 'id';
@@ -12,7 +12,7 @@ class Kategori extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    
+
     protected $allowedFields = [
         'nama_kategori',
         'slug',
@@ -53,8 +53,8 @@ class Kategori extends Model
     public function getActiveCategories()
     {
         return $this->where('is_active', '1')
-                    ->orderBy('urutan', 'ASC')
-                    ->findAll();
+            ->orderBy('urutan', 'ASC')
+            ->findAll();
     }
 
     /**
@@ -63,10 +63,10 @@ class Kategori extends Model
     public function getCategoriesWithCount()
     {
         return $this->select('publikasi_kategori.*, COUNT(publikasi_konten.id) as total_konten')
-                    ->join('publikasi_konten', 'publikasi_konten.kategori_id = publikasi_kategori.id', 'left')
-                    ->groupBy('publikasi_kategori.id')
-                    ->orderBy('publikasi_kategori.urutan', 'ASC')
-                    ->findAll();
+            ->join('publikasi_konten', 'publikasi_konten.kategori_id = publikasi_kategori.id', 'left')
+            ->groupBy('publikasi_kategori.id')
+            ->orderBy('publikasi_kategori.urutan', 'ASC')
+            ->findAll();
     }
 
     /**
@@ -76,16 +76,16 @@ class Kategori extends Model
     {
         helper('text');
         $slug = url_title($namaKategori, '-', true);
-        
+
         // Check if slug exists
         $count = 1;
         $originalSlug = $slug;
-        
+
         while ($this->where('slug', $slug)->first()) {
             $slug = $originalSlug . '-' . $count;
             $count++;
         }
-        
+
         return $slug;
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\Pendaftaran as PendaftaranModel;
+use App\Models\PendaftaranModel;
 use App\Libraries\PdfGenerator;
 
 class Pendaftaran extends BaseController

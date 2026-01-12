@@ -13,9 +13,9 @@ class Artikel extends BaseController
 
     public function __construct()
     {
-        $this->kontenModel = new \App\Models\Konten();
-        $this->kategoriModel = new \App\Models\Kategori();
-        $this->galeriModel = new \App\Models\Galeri();
+        $this->kontenModel = new \App\Models\KontenModel();
+        $this->kategoriModel = new \App\Models\KategoriModel();
+        $this->galeriModel = new \App\Models\GaleriModel();
         $this->session = \Config\Services::session();
         helper(['form', 'url', 'auth', 'filesystem']);
     }

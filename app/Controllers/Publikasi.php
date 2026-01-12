@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\KategoriModel;
+use App\Models\KontenModel;
 
 class Publikasi extends BaseController
 {
@@ -12,7 +13,7 @@ class Publikasi extends BaseController
 
     public function __construct()
     {
-        $this->kategoriModel = new \App\Models\Kategori();
+        $this->kategoriModel = new \App\Models\KategoriModel();
         $this->session = \Config\Services::session();
         helper(['form', 'url', 'auth']);
     }
@@ -33,7 +34,7 @@ class Publikasi extends BaseController
     }
 
     /**
-     * Create kategori form
+     * Create kategori forms
      */
     public function kategoriCreate()
     {
@@ -60,8 +61,8 @@ class Publikasi extends BaseController
 
         if (!$this->validate($rules)) {
             return redirect()->back()
-                           ->withInput()
-                           ->with('errors', $this->validator->getErrors());
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
         }
 
         $namaKategori = $this->request->getPost('nama_kategori');
@@ -78,12 +79,12 @@ class Publikasi extends BaseController
 
         if ($this->kategoriModel->insert($data)) {
             return redirect()->to('/publikasi/kategori')
-                           ->with('success', 'Kategori berhasil ditambahkan');
+                ->with('success', 'Kategori berhasil ditambahkan');
         }
 
         return redirect()->back()
-                       ->withInput()
-                       ->with('error', 'Gagal menambahkan kategori');
+            ->withInput()
+            ->with('error', 'Gagal menambahkan kategori');
     }
 
     /**
@@ -95,7 +96,7 @@ class Publikasi extends BaseController
 
         if (!$kategori) {
             return redirect()->to('/publikasi/kategori')
-                           ->with('error', 'Kategori tidak ditemukan');
+                ->with('error', 'Kategori tidak ditemukan');
         }
 
         $data = [
@@ -118,7 +119,7 @@ class Publikasi extends BaseController
 
         if (!$kategori) {
             return redirect()->to('/publikasi/kategori')
-                           ->with('error', 'Kategori tidak ditemukan');
+                ->with('error', 'Kategori tidak ditemukan');
         }
 
         $rules = [
@@ -129,12 +130,12 @@ class Publikasi extends BaseController
 
         if (!$this->validate($rules)) {
             return redirect()->back()
-                           ->withInput()
-                           ->with('errors', $this->validator->getErrors());
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
         }
 
         $namaKategori = $this->request->getPost('nama_kategori');
-        
+
         // Only regenerate slug if name changed
         if ($namaKategori != $kategori->nama_kategori) {
             $slug = $this->kategoriModel->generateSlug($namaKategori);
@@ -153,12 +154,12 @@ class Publikasi extends BaseController
 
         if ($this->kategoriModel->update($id, $data)) {
             return redirect()->to('/publikasi/kategori')
-                           ->with('success', 'Kategori berhasil diupdate');
+                ->with('success', 'Kategori berhasil diupdate');
         }
 
         return redirect()->back()
-                       ->withInput()
-                       ->with('error', 'Gagal mengupdate kategori');
+            ->withInput()
+            ->with('error', 'Gagal mengupdate kategori');
     }
 
     /**
@@ -170,25 +171,25 @@ class Publikasi extends BaseController
 
         if (!$kategori) {
             return redirect()->to('/publikasi/kategori')
-                           ->with('error', 'Kategori tidak ditemukan');
+                ->with('error', 'Kategori tidak ditemukan');
         }
 
         // Check if category has content
-        $kontenModel = new \App\Models\Konten();
+        $kontenModel = new KontenModel();
         $hasContent = $kontenModel->where('kategori_id', $id)->countAllResults();
 
         if ($hasContent > 0) {
             return redirect()->to('/publikasi/kategori')
-                           ->with('error', 'Kategori tidak dapat dihapus karena masih memiliki konten');
+                ->with('error', 'Kategori tidak dapat dihapus karena masih memiliki konten');
         }
 
         if ($this->kategoriModel->delete($id)) {
             return redirect()->to('/publikasi/kategori')
-                           ->with('success', 'Kategori berhasil dihapus');
+                ->with('success', 'Kategori berhasil dihapus');
         }
 
         return redirect()->to('/publikasi/kategori')
-                       ->with('error', 'Gagal menghapus kategori');
+            ->with('error', 'Gagal menghapus kategori');
     }
 
     /**

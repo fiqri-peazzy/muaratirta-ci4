@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class User extends Model
+class UserModel extends Model
 {
     protected $table            = 'users';
     protected $primaryKey       = 'id';
@@ -12,7 +12,7 @@ class User extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    
+
     protected $allowedFields    = [
         'username',
         'email',
@@ -85,9 +85,9 @@ class User extends Model
     public function findByUsernameOrEmail($identifier)
     {
         return $this->where('username', $identifier)
-                    ->orWhere('email', $identifier)
-                    ->where('is_active', '1')
-                    ->first();
+            ->orWhere('email', $identifier)
+            ->where('is_active', '1')
+            ->first();
     }
 
     /**
@@ -118,7 +118,7 @@ class User extends Model
     public function hasPermission($userId, $requiredLevel)
     {
         $user = $this->find($userId);
-        
+
         if (!$user) {
             return false;
         }

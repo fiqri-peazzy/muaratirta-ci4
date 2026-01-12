@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\User;
+use App\Models\UserModel;
 
 class Auth extends BaseController
 {
@@ -12,7 +13,7 @@ class Auth extends BaseController
 
     public function __construct()
     {
-        $this->userModel = new User();
+        $this->userModel = new UserModel();
         $this->session = \Config\Services::session();
         helper(['form', 'url']);
     }
@@ -60,8 +61,8 @@ class Auth extends BaseController
 
         if (!$this->validate($rules)) {
             return redirect()->back()
-                           ->withInput()
-                           ->with('errors', $this->validator->getErrors());
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
         }
 
         $login    = $this->request->getPost('login');
@@ -72,22 +73,22 @@ class Auth extends BaseController
 
         if (!$user) {
             return redirect()->back()
-                           ->withInput()
-                           ->with('error', 'Username/Email tidak ditemukan');
+                ->withInput()
+                ->with('error', 'Username/Email tidak ditemukan');
         }
 
         // Check if account is active
         if ($user->is_active != '1') {
             return redirect()->back()
-                           ->withInput()
-                           ->with('error', 'Akun Anda tidak aktif. Hubungi administrator.');
+                ->withInput()
+                ->with('error', 'Akun Anda tidak aktif. Hubungi administrator.');
         }
 
         // Verify password
         if (!$this->userModel->verifyPassword($user, $password)) {
             return redirect()->back()
-                           ->withInput()
-                           ->with('error', 'Password salah');
+                ->withInput()
+                ->with('error', 'Password salah');
         }
 
         // Login success - Set session
@@ -111,7 +112,7 @@ class Auth extends BaseController
         log_message('info', 'User login: ' . $user->username . ' (ID: ' . $user->id . ')');
 
         return redirect()->route('dashboard')
-                       ->with('success', 'Selamat datang, ' . $user->nm_lengkap . '!');
+            ->with('success', 'Selamat datang, ' . $user->nm_lengkap . '!');
     }
 
     /**
@@ -127,6 +128,6 @@ class Auth extends BaseController
         $this->session->destroy();
 
         return redirect()->route('login')
-                       ->with('success', 'Anda berhasil logout');
+            ->with('success', 'Anda berhasil logout');
     }
 }

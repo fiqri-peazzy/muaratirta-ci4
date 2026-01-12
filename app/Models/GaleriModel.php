@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Galeri extends Model
+class GaleriModel extends Model
 {
     protected $table            = 'publikasi_galeri';
     protected $primaryKey       = 'id';
@@ -12,7 +12,7 @@ class Galeri extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    
+
     protected $allowedFields = [
         'konten_id',
         'image_path',
@@ -39,8 +39,8 @@ class Galeri extends Model
     public function getImagesByKonten($kontenId)
     {
         return $this->where('konten_id', $kontenId)
-                    ->orderBy('urutan', 'ASC')
-                    ->findAll();
+            ->orderBy('urutan', 'ASC')
+            ->findAll();
     }
 
     /**
@@ -49,7 +49,7 @@ class Galeri extends Model
     public function deleteByKonten($kontenId)
     {
         $images = $this->getImagesByKonten($kontenId);
-        
+
         // Delete files first
         foreach ($images as $image) {
             $filePath = FCPATH . 'uploads/publikasi/galeri/' . $image->image_path;
@@ -57,7 +57,7 @@ class Galeri extends Model
                 unlink($filePath);
             }
         }
-        
+
         // Delete records
         return $this->where('konten_id', $kontenId)->delete();
     }
