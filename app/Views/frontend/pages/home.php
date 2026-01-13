@@ -75,8 +75,12 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
         <div class="absolute top-1/2 left-1/3 w-72 h-72 bg-blue-300/10 rounded-full blur-3xl animate-pulse-ring" style="animation-delay: 2s;"></div>
 
         <!-- Wave Pattern Overlay -->
-        <svg class="absolute bottom-0 w-full h-64 opacity-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <!-- <svg class="absolute bottom-0 w-full h-64 opacity-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,197.3C1248,203,1344,149,1392,122.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg> -->
+        <!-- add some  -->
+        <svg class="absolute bottom-0 opacity-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#0099ff" fill-opacity="1" d="M0,64L48,69.3C96,75,192,85,288,74.7C384,64,480,32,576,58.7C672,85,768,171,864,186.7C960,203,1056,149,1152,128C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
         </svg>
     </div>
 
@@ -145,18 +149,19 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
 
             <!-- Right Visual -->
             <div class="relative" data-aos="fade-left">
-                <div class="relative">
+                <div class="relative max-w-lg ml-auto">
                     <!-- Main Image Container with 3D Effect -->
-                    <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500">
+                    <div class="relative z-10 rounded-3xl overflow-hidden transform hover:scale-105 transition-transform duration-500 shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]">
                         <img
-                            src="<?= base_url('assets/image/bg.jpg') ?>"
+                            src="<?= base_url('backend/assets/images/water_3d.png') ?>"
                             alt="PDAM Infrastructure"
-                            class="w-full h-auto">
-                        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent"></div>
+                            class="w-full h-auto animate-float"
+                            style="animation-duration: 4s;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/40 via-transparent to-transparent"></div>
                     </div>
 
                     <!-- Floating Stats Card -->
-                    <div class="absolute -bottom-8 -left-8 bg-white rounded-2xl shadow-2xl p-6 animate-float">
+                    <div class="absolute -bottom-10 -left-10 z-20 bg-white rounded-2xl shadow-2xl p-6 animate-float">
                         <div class="flex items-center space-x-4">
                             <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
                                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,7 +176,7 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
                     </div>
 
                     <!-- Floating Quality Badge -->
-                    <div class="absolute -top-8 -right-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl shadow-2xl p-6 animate-float" style="animation-delay: 0.5s;">
+                    <div class="absolute -top-10 -right-10 z-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl shadow-2xl p-6 animate-float" style="animation-delay: 0.5s;">
                         <div class="text-center text-white">
                             <p class="text-3xl font-bold">K4</p>
                             <p class="text-xs font-medium">Standard</p>

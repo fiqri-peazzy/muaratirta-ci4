@@ -53,6 +53,8 @@ $routes->group('', ['filter' => 'auth', 'namespace' => 'App\Controllers'], funct
         $routes->get('', 'Pengaduan::index', ['as' => 'pengaduan.index']);
         $routes->get('detail/(:num)', 'Pengaduan::detail/$1', ['as' => 'pengaduan.detail']);
         $routes->post('update-status/(:num)', 'Pengaduan::updateStatus/$1', ['as' => 'pengaduan.update_status']);
+
+        $routes->get('export-pdf/(:num)', 'Pengaduan::exportPdf/$1', ['as' => 'pengaduan.export_pdf']);
     });
 
     $routes->group('pendaftaran', ['filter' => 'auth:1,2'], function ($routes) {
