@@ -118,13 +118,13 @@
                         x-transition:leave-end="opacity-0 scale-95"
                         class="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2"
                         style="display: none;">
-                        <a href="<?= base_url('cek-tagihan') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                        <a href="<?= route_to('tagihan') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
                             Cek Tagihan
                         </a>
-                        <a href="<?= base_url('pasang-baru') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                        <a href="<?= route_to('pasang_baru') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
                             Pasang Baru
                         </a>
-                        <a href="<?= base_url('lapor-keluhan') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                        <a href="<?= route_to('lapor_keluhan') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
                             Lapor Keluhan
                         </a>
                     </div>
@@ -160,16 +160,16 @@
                         x-transition:leave-end="opacity-0 scale-95"
                         class="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2"
                         style="display: none;">
-                        <a href="<?= base_url('berita') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                        <a href="<?= route_to('news') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
                             Berita
                         </a>
-                        <a href="<?= base_url('promo') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                        <a href="<?= route_to('promo') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
                             Promo
                         </a>
-                        <a href="<?= base_url('info-gangguan') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                        <a href="<?= route_to('info-gangguan') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
                             Info Gangguan
                         </a>
-                        <a href="<?= base_url('galeri') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                        <a href="<?= route_to('galeri') ?>" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
                             Galeri
                         </a>
                     </div>
@@ -177,7 +177,7 @@
 
                 <!-- Kontak -->
                 <a
-                    href="<?= base_url('kontak') ?>"
+                    href="<?= route_to('contact') ?>"
                     class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200"
                     :class="scrolled 
                     ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50' 
@@ -270,9 +270,9 @@
                 </button>
                 <div x-show="open" x-collapse style="display: none;">
                     <div class="pl-4 py-2 space-y-1">
-                        <a href="<?= base_url('cek-tagihan') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Cek Tagihan</a>
-                        <a href="<?= base_url('pasang-baru') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Pasang Baru</a>
-                        <a href="<?= base_url('lapor-keluhan') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Lapor Keluhan</a>
+                        <a href="<?= route_to('tagihan') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Cek Tagihan</a>
+                        <a href="<?= route_to('pasang-baru') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Pasang Baru</a>
+                        <a href="<?= route_to('keluhan') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Lapor Keluhan</a>
                     </div>
                 </div>
             </div>
@@ -294,15 +294,15 @@
                 </button>
                 <div x-show="open" x-collapse style="display: none;">
                     <div class="pl-4 py-2 space-y-1">
-                        <a href="<?= base_url('berita') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Berita</a>
-                        <a href="<?= base_url('promo') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Promo</a>
-                        <a href="<?= base_url('info-gangguan') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Info Gangguan</a>
-                        <a href="<?= base_url('galeri') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Galeri</a>
+                        <a href="<?= route_to('news') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Berita</a>
+                        <a href="<?= route_to('promo') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Promo</a>
+                        <a href="<?= route_to('outage') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Info Gangguan</a>
+                        <a href="<?= route_to('gallery') ?>" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary-600">Galeri</a>
                     </div>
                 </div>
             </div>
 
-            <a href="<?= base_url('kontak') ?>" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-lg transition-colors">
+            <a href="<?= route_to('contact') ?>" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-lg transition-colors">
                 Kontak
             </a>
         </div>

@@ -1,0 +1,847 @@
+kita lanjut ke cek-tagihan page 
+
+nah sama juga konsisten design seperti page kontak 
+
+<section id="about" class="about section-bg">
+            <div class="container" data-aos="fade-up">
+                <!-- Search Form -->
+                <div class="row justify-content-center mt-5">
+                    <div class="col-lg-8">
+                        <div class="tagihan-search-wrapper" data-aos="zoom-in">
+                            <div class="tagihan-search-icon">
+                                <i class="bi bi-search"></i>
+                            </div>
+                            <h3 class="tagihan-search-title text-center">Cek Tagihan Air Anda</h3>
+                            <form method="post" action="<?= BASE_URL . '/api/get-tagihan-detail.php' ?>"
+                                id="cek_tagihan_form">
+                                <div class="tagihan-form-group">
+                                    <input type="text" name="id_pel" class="tagihan-input"
+                                        placeholder="Masukkan No. Sambung (7 digit)" maxlength="7" required
+                                        oninput="checkInputLength(this)" autocomplete="off">
+                                    <button type="submit" class="tagihan-btn-submit">
+                                        <i class="bi bi-search me-2"></i>
+                                        Cek Sekarang
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Result Card -->
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-10">
+                        <div class="tagihan-result-card d-none" id="result-card" data-aos="fade-up">
+                            <!-- Capture Container -->
+                            <div id="capture-area">
+                                <!-- Customer Info Header -->
+                                <div class="tagihan-card-header">
+                                    <div class="tagihan-customer-info">
+                                        <div class="tagihan-info-row">
+                                            <span class="tagihan-info-label">
+                                                <i class="bi bi-hash"></i>
+                                                No. Sambung
+                                            </span>
+                                            <span class="tagihan-info-value" id="id_pel">-</span>
+                                        </div>
+                                        <div class="tagihan-info-row">
+                                            <span class="tagihan-info-label">
+                                                <i class="bi bi-person-circle"></i>
+                                                Nama Pelanggan
+                                            </span>
+                                            <span class="tagihan-info-value" id="nama">-</span>
+                                        </div>
+                                        <div class="tagihan-info-row">
+                                            <span class="tagihan-info-label">
+                                                <i class="bi bi-geo-alt-fill"></i>
+                                                Alamat
+                                            </span>
+                                            <span class="tagihan-info-value" id="alamat">-</span>
+                                        </div>
+                                        <div class="tagihan-info-row">
+                                            <span class="tagihan-info-label">
+                                                <i class="bi bi-diagram-3-fill"></i>
+                                                Klasifikasi
+                                            </span>
+                                            <span class="tagihan-info-value" id="klasifikasi">-</span>
+                                        </div>
+                                        <!-- Tambahkan class 'hide-on-capture' untuk menyembunyikan saat capture -->
+                                        <div class="tagihan-info-row hide-on-capture">
+                                            <span class="tagihan-info-label">
+                                                <i class="bi bi-camera-fill"></i>
+                                                Foto Rumah
+                                            </span>
+                                            <span class="tagihan-info-value">
+                                                <a href="#" class="tagihan-foto-link" id="foto-rumah-link">
+                                                    <i class="bi bi-image"></i>
+                                                    Lihat Foto Rumah
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Bills Table -->
+                                <div class="tagihan-card-body">
+                                    <h3 class="tagihan-section-title">
+                                        <i class="bi bi-receipt-cutoff"></i>
+                                        Rincian Tagihan
+                                    </h3>
+                                    <div class="table-responsive">
+                                        <table class="tagihan-table" id="tabel-tagihan">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Periode</th>
+                                                    <th>Kubik (m³)</th>
+                                                    <th>Tagihan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Data akan diisi oleh JavaScript -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- Alert Box - Tambahkan class 'hide-on-capture' -->
+                                    <div class="tagihan-alert-box hide-on-capture">
+                                        <div class="tagihan-alert-header">
+                                            <div class="tagihan-alert-icon">
+                                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                            </div>
+                                            <h4 class="tagihan-alert-title">PERHATIAN!</h4>
+                                        </div>
+                                        <ul class="tagihan-alert-list">
+                                            <li class="tagihan-alert-item">
+                                                <i class="bi bi-check-circle-fill"></i>
+                                                <span>Untuk menghindari <strong>Denda Keterlambatan</strong> dan
+                                                    <strong>Sanksi Penyegelan</strong>, mohon untuk melakukan pembayaran
+                                                    sebelum tanggal <strong>20 setiap bulan berjalan</strong>.</span>
+                                            </li>
+                                            <li class="tagihan-alert-item">
+                                                <i class="bi bi-check-circle-fill"></i>
+                                                <span>Pembayaran melalui metode transfer tanpa konfirmasi bukti transfer
+                                                    /
+                                                    SP2D maka tagihan kami anggap <strong>BELUM LUNAS!</strong></span>
+                                            </li>
+                                        </ul>
+                                        <div class="tagihan-whatsapp-box">
+                                            <span class="tagihan-whatsapp-label">
+                                                <i class="bi bi-info-circle-fill me-2"></i>
+                                                Konfirmasi Bukti Transfer
+                                            </span>
+                                            <a href="https://wa.me/6281244697154" class="tagihan-btn-whatsapp"
+                                                target="_blank">
+                                                <i class="bi bi-whatsapp"></i>
+                                                Hubungi via WhatsApp
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Watermark (shown only in screenshot) -->
+                                <div class="tagihan-watermark">
+                                    <strong>PDAM Muara Tirta Kota Gorontalo</strong><br>
+                                    Dicetak pada: <span id="capture-timestamp"></span>
+                                </div>
+                            </div>
+                            <!-- Capture Button Container -->
+                            <div class="tagihan-capture-container">
+                                <p class="tagihan-capture-title">
+                                    <!--<i class="bi bi-download"></i>-->
+                                    Simpan atau Bagikan Tagihan
+                                </p>
+                                <div class="tagihan-capture-actions">
+                                    <button type="button" class="tagihan-btn-capture" onclick="captureTagihan()">
+                                        <i class="bi bi-download"></i>
+                                        Unduh & Bagikan
+                                    </button>
+                                    <!--<button type="button" class="tagihan-btn-share" onclick="shareToWhatsApp()">-->
+                                    <!--    <i class="bi bi-whatsapp"></i>-->
+                                    <!--    Bagikan ke WhatsApp-->
+                                    <!--</button>-->
+                                </div>
+                                <!-- Loading State -->
+                                <div class="capture-loading" id="capture-loading">
+                                    <div class="capture-spinner"></div>
+                                    <p style="color: #64748b; margin: 0;">Sedang membuat gambar...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Empty State (Tagihan Lunas/Tidak Tersedia) -->
+                        <div class="tagihan-result-card d-none" id="empty-card" data-aos="fade-up">
+                            <div class="tagihan-card-body">
+                                <div class="tagihan-empty-state">
+                                    <div class="tagihan-empty-icon">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                    </div>
+                                    <h3 class="tagihan-empty-title">Tagihan Sudah Lunas atau tidak tersedia</h3>
+                                    <p class="tagihan-empty-text">
+                                        Hubungi customer service kami untuk informasi lebih lanjut.
+                                    </p>
+                                    <div class="tagihan-whatsapp-box mt-4">
+                                        <span class="tagihan-whatsapp-label">
+                                            Butuh Bantuan?
+                                        </span>
+                                        <a href="https://wa.me/6281244697154" class="tagihan-btn-whatsapp"
+                                            target="_blank">
+                                            <i class="bi bi-whatsapp"></i>
+                                            Hubungi Customer Service
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+  <!-- Modal Foto Rumah -->
+    <div class="tagihan-modal" id="foto-modal">
+        <div class="tagihan-modal-content">
+            <div class="tagihan-modal-header">
+                <h3 class="tagihan-modal-title">
+                    <i class="bi bi-camera-fill"></i>
+                    Foto Rumah Pelanggan
+                </h3>
+                <button class="tagihan-modal-close" onclick="closeFotoModal()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="tagihan-modal-body" id="foto-modal-body">
+                <!-- Loading State -->
+                <div class="tagihan-loading" id="foto-loading">
+                    <div class="tagihan-spinner"></div>
+                    <p class="tagihan-loading-text">Memuat foto...</p>
+                </div>
+                <!-- Foto Container -->
+                <div class="tagihan-foto-container d-none" id="foto-container">
+                    <img src="" alt="Foto Rumah" class="tagihan-foto-img" id="foto-img">
+                    <div class="tagihan-foto-info">
+                        <div class="tagihan-foto-info-item">
+                            <span class="tagihan-foto-info-label">No. Sambung:</span>
+                            <span class="tagihan-foto-info-value" id="modal-id-pel">-</span>
+                        </div>
+                        <div class="tagihan-foto-info-item">
+                            <span class="tagihan-foto-info-label">Nama:</span>
+                            <span class="tagihan-foto-info-value" id="modal-nama">-</span>
+                        </div>
+                        <div class="tagihan-foto-info-item">
+                            <span class="tagihan-foto-info-label">Alamat:</span>
+                            <span class="tagihan-foto-info-value" id="modal-alamat">-</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Error State -->
+                <div class="tagihan-error d-none" id="foto-error">
+                    <div class="tagihan-error-icon">
+                        <i class="bi bi-image-fill"></i>
+                    </div>
+                    <p class="tagihan-error-text">Foto rumah tidak tersedia atau belum diunggah</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Share Modal -->
+    <div class="share-modal" id="share-modal">
+        <div class="share-modal-content">
+            <div class="share-modal-header">
+                <h3 class="share-modal-title">
+                    <i class="bi bi-share-fill"></i>
+                    Bagikan Tagihan
+                </h3>
+                <button class="share-modal-close" onclick="closeShareModal()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="share-preview" id="share-preview">
+                <img src="" alt="Preview Tagihan" id="share-preview-img" style="display: none;">
+                <div style="text-align: center; padding: 20px;">
+                    <div class="capture-spinner"></div>
+                    <p style="color: #64748b; margin-top: 10px;">Mempersiapkan gambar...</p>
+                </div>
+            </div>
+            <div class="share-options">
+                <button class="share-option-btn" onclick="shareViaWhatsAppPersonal()">
+                    <div class="share-option-icon">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div class="share-option-text">
+                        <h4>WhatsApp Personal</h4>
+                        <p>Bagikan ke kontak WhatsApp pribadi</p>
+                    </div>
+                </button>
+                <button class="share-option-btn" onclick="shareViaWhatsAppWeb()">
+                    <div class="share-option-icon">
+                        <i class="bi bi-laptop"></i>
+                    </div>
+                    <div class="share-option-text">
+                        <h4>WhatsApp Web</h4>
+                        <p>Bagikan melalui WhatsApp Web</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+scripts
+
+  <script>
+        let capturedImageBlob = null;
+        let capturedImageDataUrl = null;
+        // Capture tagihan as image (existing function)
+        function captureTagihan() {
+            const captureArea = document.getElementById('capture-area');
+            const loadingEl = document.getElementById('capture-loading');
+            const btnCapture = document.querySelector('.tagihan-btn-capture');
+            // Set timestamp
+            const now = new Date();
+            const timestamp = now.toLocaleString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('capture-timestamp').textContent = timestamp;
+            // Show loading
+            loadingEl.classList.add('active');
+            btnCapture.style.display = 'none';
+            // Add capturing class to show watermark
+            captureArea.classList.add('capturing');
+            // Wait a moment for rendering
+            setTimeout(() => {
+                html2canvas(captureArea, {
+                    scale: 2,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                }).then(canvas => {
+                    // Remove capturing class
+                    captureArea.classList.remove('capturing');
+                    // Convert to blob and download
+                    canvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        const filename = `Tagihan_${currentNoSambung}_${now.getTime()}.png`;
+                        link.href = url;
+                        link.download = filename;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                        // Hide loading, show button
+                        loadingEl.classList.remove('active');
+                        btnCapture.style.display = 'inline-flex';
+                        // Show success message
+                        toastr.success('Gambar tagihan berhasil diunduh!');
+                    }, 'image/png');
+                }).catch(error => {
+                    console.error('Error capturing:', error);
+                    captureArea.classList.remove('capturing');
+                    loadingEl.classList.remove('active');
+                    btnCapture.style.display = 'inline-flex';
+                    toastr.error('Gagal membuat gambar. Silakan coba lagi.');
+                });
+            }, 300);
+        }
+        // Share to WhatsApp
+        function shareToWhatsApp() {
+            const captureArea = document.getElementById('capture-area');
+            const loadingEl = document.getElementById('capture-loading');
+            // Set timestamp
+            const now = new Date();
+            const timestamp = now.toLocaleString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('capture-timestamp').textContent = timestamp;
+            // Show loading
+            loadingEl.classList.add('active');
+            // Add capturing class
+            captureArea.classList.add('capturing');
+            // Capture image
+            setTimeout(() => {
+                html2canvas(captureArea, {
+                    scale: 2,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                }).then(canvas => {
+                    // Remove capturing class
+                    captureArea.classList.remove('capturing');
+                    // Convert to blob
+                    canvas.toBlob(function(blob) {
+                        // Upload ke server
+                        const formData = new FormData();
+                        formData.append('tagihan_image', blob, `tagihan_${currentNoSambung}.png`);
+                        fetch('<?= BASE_URL ?>/upload-tagihan.php', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                loadingEl.classList.remove('active');
+                                if (data.success) {
+                                    // Buat pesan dengan link gambar
+                                    const message = encodeURIComponent(
+                                        `*TAGIHAN PDAM MUARA TIRTA*\n\n` +
+                                        `👤 Nama: ${currentNama}\n` +
+                                        `🔢 No. Sambung: ${currentNoSambung}\n` +
+                                        `📍 Alamat: ${currentAlamat}\n\n` +
+                                        `📊 Lihat Tagihan Detail:\n${data.url}\n\n` +
+                                        `🌐 Cek Online: ${window.location.origin}/cek-tagihan`
+                                    );
+                                    // Detect mobile or desktop
+                                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator
+                                        .userAgent);
+                                    const whatsappUrl = isMobile ?
+                                        `whatsapp://send?text=${message}` :
+                                        `https://web.whatsapp.com/send?text=${message}`;
+                                    // Open WhatsApp
+                                    window.open(whatsappUrl, '_blank');
+                                    toastr.success(
+                                        'Link gambar tagihan berhasil dibuat! Silakan bagikan via WhatsApp.'
+                                    );
+                                } else {
+                                    toastr.error(
+                                        'Gagal membuat link gambar. Silakan coba lagi.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error uploading:', error);
+                                loadingEl.classList.remove('active');
+                                toastr.error('Terjadi kesalahan saat upload gambar.');
+                            });
+                    }, 'image/png');
+                }).catch(error => {
+                    console.error('Error capturing:', error);
+                    captureArea.classList.remove('capturing');
+                    loadingEl.classList.remove('active');
+                    toastr.error('Gagal membuat gambar. Silakan coba lagi.');
+                });
+            }, 300);
+        }
+        // Share via WhatsApp Personal (Mobile)
+        function shareViaWhatsAppPersonal() {
+            if (!capturedImageBlob) {
+                toastr.error('Gambar belum siap. Silakan coba lagi.');
+                return;
+            }
+            // Check if Web Share API is supported
+            if (navigator.share && navigator.canShare) {
+                const file = new File([capturedImageBlob], `Tagihan_${currentNoSambung}.png`, {
+                    type: 'image/png'
+                });
+                const shareData = {
+                    title: 'Tagihan PDAM Muara Tirta',
+                    text: `Tagihan PDAM a.n ${currentNama}\nNo. Sambung: ${currentNoSambung}\n\nCek tagihan Anda di: ${window.location.origin}/cek-tagihan`,
+                    files: [file]
+                };
+                if (navigator.canShare(shareData)) {
+                    navigator.share(shareData)
+                        .then(() => {
+                            closeShareModal();
+                            toastr.success('Berhasil dibagikan!');
+                        })
+                        .catch((error) => {
+                            console.error('Error sharing:', error);
+                            // Fallback to WhatsApp direct link
+                            shareViaWhatsAppDirect();
+                        });
+                } else {
+                    // Fallback if can't share files
+                    shareViaWhatsAppDirect();
+                }
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                shareViaWhatsAppDirect();
+            }
+        }
+        // Share via WhatsApp Direct (Fallback)
+        function shareViaWhatsAppDirect() {
+            const message = encodeURIComponent(
+                `*Tagihan PDAM Muara Tirta*\n\n` +
+                `Nama: ${currentNama}\n` +
+                `No. Sambung: ${currentNoSambung}\n` +
+                `Alamat: ${currentAlamat}\n\n` +
+                `Cek tagihan lengkap Anda di:\n${window.location.origin}/cek-tagihan`
+            );
+            // Detect mobile or desktop
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            const whatsappUrl = isMobile ?
+                `whatsapp://send?text=${message}` :
+                `https://wa.me/?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+            closeShareModal();
+            toastr.info('Silakan pilih kontak untuk membagikan tagihan. Gambar dapat dikirim secara terpisah.');
+        }
+        // Share via WhatsApp Web
+        function shareViaWhatsAppWeb() {
+            const message = encodeURIComponent(
+                `*Tagihan PDAM Muara Tirta*\n\n` +
+                `Nama: ${currentNama}\n` +
+                `No. Sambung: ${currentNoSambung}\n` +
+                `Alamat: ${currentAlamat}\n\n` +
+                `Cek tagihan lengkap Anda di:\n${window.location.origin}/cek-tagihan`
+            );
+            window.open`https://web.whatsapp.com/send?text=${message}`, '_blank');
+            closeShareModal();
+            toastr.info('Silakan pilih kontak di WhatsApp Web. Gambar dapat dikirim secara terpisah.');
+        }
+        // Close share modal
+        function closeShareModal() {
+            const shareModal = document.getElementById('share-modal');
+            shareModal.classList.remove('active');
+            capturedImageBlob = null;
+            capturedImageDataUrl = null;
+        }
+        // Close modal when clicking outside
+        document.getElementById('share-modal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareModal();
+            }
+        });
+    </script>
+    <script>
+        // Global variables
+        let currentNoSambung = '';
+        let currentNama = '';
+        let currentAlamat = '';
+        // Check input length
+        function checkInputLength(input) {
+            if (input.value.length > 7) {
+                input.value = input.value.slice(0, 7);
+                toastr.error('Maksimal 7 digit');
+            }
+        }
+        // Get classification name
+        function ketGolongan(gol) {
+            const golonganMap = {
+                '01': 'Sosial Umum',
+                '02': 'Sosial Khusus',
+                '03': 'Rumah Tangga A',
+                '04': 'Rumah Tangga B',
+                '05': 'Instansi Pemerintah',
+                '06': 'Niaga Kecil',
+                '07': 'Niaga Besar',
+                '08': 'Rumah Tangga C',
+                '09': 'Khusus',
+                '10': 'Rumah Tangga D'
+            };
+            return golonganMap[gol] || 'Klasifikasi Tidak Dikenali';
+        }
+        // Format currency
+        function formatRupiah(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+        // Capture tagihan as image
+        function captureTagihan() {
+            const captureArea = document.getElementById('capture-area');
+            const loadingEl = document.getElementById('capture-loading');
+            const btnCapture = document.querySelector('.tagihan-btn-capture');
+            // Set timestamp
+            const now = new Date();
+            const timestamp = now.toLocaleString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('capture-timestamp').textContent = timestamp;
+            // Show loading
+            loadingEl.classList.add('active');
+            btnCapture.style.display = 'none';
+            // Add capturing class to show watermark
+            captureArea.classList.add('capturing');
+            // Wait a moment for rendering
+            setTimeout(() => {
+                html2canvas(captureArea, {
+                    scale: 2,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                }).then(canvas => {
+                    // Remove capturing class
+                    captureArea.classList.remove('capturing');
+                    // Convert to blob and download
+                    canvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        const filename = `Tagihan_${currentNoSambung}_${now.getTime()}.png`;
+                        link.href = url;
+                        link.download = filename;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                        // Hide loading, show button
+                        loadingEl.classList.remove('active');
+                        btnCapture.style.display = 'inline-flex';
+                        // Show success message
+                        toastr.success('Gambar tagihan berhasil diunduh!');
+                    }, 'image/png');
+                }).catch(error => {
+                    console.error('Error capturing:', error);
+                    captureArea.classList.remove('capturing');
+                    loadingEl.classList.remove('active');
+                    btnCapture.style.display = 'inline-flex';
+                    toastr.error('Gagal membuat gambar. Silakan coba lagi.');
+                });
+            }, 300);
+        }
+        // Open foto modal
+        function openFotoModal(noSambung, nama, alamat) {
+            currentNoSambung = noSambung;
+            currentNama = nama;
+            currentAlamat = alamat;
+            const modal = document.getElementById('foto-modal');
+            const loading = document.getElementById('foto-loading');
+            const container = document.getElementById('foto-container');
+            const error = document.getElementById('foto-error');
+            // Reset states
+            loading.classList.remove('d-none');
+            container.classList.add('d-none');
+            error.classList.add('d-none');
+            // Show modal
+            modal.classList.add('active');
+            // Set info
+            document.getElementById('modal-id-pel').textContent = noSambung;
+            document.getElementById('modal-nama').textContent = nama;
+            document.getElementById('modal-alamat').textContent = alamat;
+            // Load image
+            // const fotoUrl = `http://103.133.223.242/sister-gto/api/uploads/rumah/${noSambung}.jpg`;
+            const fotoUrl = `proxy.php?id=${noSambung}`;
+            const img = document.getElementById('foto-img');
+            img.onload = function() {
+                loading.classList.add('d-none');
+                container.classList.remove('d-none');
+            };
+            img.onerror = function() {
+                loading.classList.add('d-none');
+                error.classList.remove('d-none');
+            };
+            img.src = fotoUrl;
+        }
+        // Close foto modal
+        function closeFotoModal() {
+            const modal = document.getElementById('foto-modal');
+            modal.classList.remove('active');
+        }
+        // Close modal when clicking outside
+        document.getElementById('foto-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFotoModal();
+            }
+        });
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeFotoModal();
+            }
+        });
+        // Form submission
+        $('#cek_tagihan_form').on('submit', function(e) {
+            e.preventDefault();
+            var form = this;
+            var formData = new FormData(form);
+            $.ajax({
+                url: $(form).attr('action'),
+                method: $(form).attr('method'),
+                data: formData,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    toastr.remove();
+                    $('#result-card').addClass('d-none');
+                    $('#empty-card').addClass('d-none');
+                    $('#tabel-tagihan tbody').empty();
+                },
+                success: function(response) {
+                    if ($.isEmptyObject(response.error)) {
+                        if (response.status == 'true' && response.pelanggan && response.pelanggan
+                            .length > 0) {
+                            // Has bills
+                            const pelanggan = response.pelanggan[0];
+                            currentNoSambung = pelanggan.NOSAMW;
+                            currentNama = pelanggan.NAMA;
+                            currentAlamat = pelanggan.ALAMAT;
+                            $(form)[0].reset();
+                            $('#result-card').removeClass('d-none');
+                            // Fill customer info
+                            $('#id_pel').text(currentNoSambung);
+                            $('#nama').text(currentNama);
+                            $('#alamat').text(currentAlamat);
+                            $('#klasifikasi').text(ketGolongan(pelanggan.GOLONGAN));
+                            // Setup foto link
+                            $('#foto-rumah-link').off('click').on('click', function(e) {
+                                e.preventDefault();
+                                openFotoModal(currentNoSambung, currentNama, currentAlamat);
+                            });
+                            // Fill bills table
+                            let no = 0;
+                            let totalTagihan = 0;
+                            $.each(response.pelanggan, function(index, item) {
+                                no++;
+                                totalTagihan += parseInt(item.TAGIHAN);
+                                $('#tabel-tagihan tbody').append(`
+                                <tr>
+                                    <td>${no}</td>
+                                    <td>${item.PERIODE}</td>
+                                    <td>${item.PAKAI}</td>
+                                    <td>${formatRupiah(item.TAGIHAN)}</td>
+                                </tr>
+                            `);
+                            });
+                            // Add total row
+                            $('#tabel-tagihan tbody').append(`
+                            <tr class="tagihan-total-row">
+                                <td colspan="3" style="text-align: center;">
+                                    <strong>TOTAL TAGIHAN</strong>
+                                </td>
+                                <td><strong>${formatRupiah(totalTagihan)}</strong></td>
+                            </tr>
+                        `);
+                            // Scroll to result
+                            $('html, body').animate({
+                                scrollTop: $('#result-card').offset().top - 100
+                            }, 800);
+                        } else {
+                            // No bills (Lunas)
+                            const noSambung = $('input[name="id_pel"]').val();
+                            currentNoSambung = noSambung;
+                            $(form)[0].reset();
+                            $('#empty-card').removeClass('d-none');
+                            // Scroll to result
+                            $('html, body').animate({
+                                scrollTop: $('#empty-card').offset().top - 100
+                            }, 800);
+                        }
+                    } else {
+                        var errMsg = '';
+                        $.each(response.error, function(i, val) {
+                            errMsg += val;
+                        });
+                        toastr.error(errMsg);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    toastr.error('Terjadi kesalahan saat mengambil data. Silakan coba lagi.');
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        ## Referensi API response structure
+
+        api_tagihan 
+
+<?php
+function getTagihanDetail($id_pel)
+{
+    $url = 'http://gorontalo.homeip.net/webapi/pelanggan/getTagihanDetail?token=5d659eef91487eb4d4c4181d51977mkm&nosamw=' . $id_pel;
+    $headers = array(
+        "Content-Type: application/json; charset=UTF-8"
+    );
+    if (function_exists('curl_init')) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        $response = curl_exec($ch);
+        curl_close($ch);
+    } else {
+        // Fallback using file_get_contents if cURL is disabled
+        $options = [
+            'http' => [
+                'method' => 'GET',
+                'header' => implode("\r\n", $headers),
+                'timeout' => 10
+            ]
+        ];
+        $response = @file_get_contents($url, false, stream_context_create($options));
+    }
+    if ($response === false) {
+        return ['status' => false, 'message' => 'Gagal menghubungi server API'];
+    }
+    return json_decode($response, true);
+}
+
+api/get-tagihan-detail
+
+<?php
+require('../path.php');
+require_once(ROOT_PATH . '/app/db/db.php');
+require_once(ROOT_PATH . '/app/helpers/api_tagihan.php');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $errors = [];
+    if (empty($_POST['id_pel'])) {
+        $errors[] = 'Masukan No Sambung';
+    } elseif (!is_numeric($_POST['id_pel'])) {
+        $errors[] = 'No Sambung Harus Berupa Angka';
+    }
+    if (count($errors) == 0) {
+        $id_pel = $_POST['id_pel'];
+        $data = getTagihanDetail($id_pel);
+        // print_r($data);
+        if (count($data) > 0) {
+            echo json_encode($data);
+        } else {
+            echo json_encode(['status' => false]);
+        }
+    } else {
+        echo json_encode(['status' => false, 'error' => $errors]);
+    }
+}
+
+untuk response output 
+
+{
+  "status": "true",
+  "pelanggan": [
+    {
+      "NOSAMW": "0131341",
+      "NAMA": "PRM GRAHA ARSY SEJAHTERA",
+      "ALAMAT": "JL LUPOYO (E13)",
+      "GOLONGAN": "04",
+      "METER_KINI": "102",
+      "METER_LALU": "87",
+      "PAKAI": "15",
+      "PERIODE": "202506",
+      "TAGIHAN": "174140"
+    },
+    {
+      "NOSAMW": "0131341",
+      "NAMA": "PRM GRAHA ARSY SEJAHTERA",
+      "ALAMAT": "JL LUPOYO (E13)",
+      "GOLONGAN": "04",
+      "METER_KINI": "140",
+      "METER_LALU": "110",
+      "PAKAI": "30",
+      "PERIODE": "202508",
+      "TAGIHAN": "222560"
+    },
+    {
+      "NOSAMW": "0131341",
+      "NAMA": "PRM GRAHA ARSY SEJAHTERA",
+      "ALAMAT": "JL LUPOYO (E13)",
+      "GOLONGAN": "04",
+      "METER_KINI": "225",
+      "METER_LALU": "181",
+      "PAKAI": "44",
+      "PERIODE": "202512",
+      "TAGIHAN": "321882"
+    }
+  ]
+}
+
+jadi di tampilkan per periode tahunbulan golongan itu as klasifikasi anda bisa lihat pada struktur di script

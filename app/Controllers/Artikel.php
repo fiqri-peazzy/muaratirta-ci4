@@ -484,4 +484,62 @@ class Artikel extends BaseController
 
         return view('frontend/pages/artikel-list', $data);
     }
+
+    /**
+     * Public index for Promo
+     */
+    public function publicPromo()
+    {
+        $search = $this->request->getGet('search');
+
+        $query = $this->kontenModel->select('publikasi_konten.*, publikasi_kategori.nama_kategori')
+            ->join('publikasi_kategori', 'publikasi_kategori.id = publikasi_konten.kategori_id')
+            ->groupStart()
+            ->where('publikasi_kategori.slug', 'info-promo')
+            ->orLike('publikasi_kategori.nama_kategori', 'promo', 'both')
+            ->groupEnd()
+            ->where('publikasi_konten.status', 'published');
+
+        if ($search) {
+            $query->like('publikasi_konten.judul', $search);
+        }
+
+        $data = [
+            'title' => 'Promo & Penawaran',
+            'kontens' => $query->orderBy('published_at', 'DESC')->paginate(9, 'berita'),
+            'pager' => $this->kontenModel->pager,
+            'search' => $search
+        ];
+
+        return view('frontend/pages/artikel-list', $data);
+    }
+
+    /**
+     * Public index for Gallery
+     */
+    public function publicGallery()
+    {
+        $search = $this->request->getGet('search');
+
+        $query = $this->kontenModel->select('publikasi_konten.*, publikasi_kategori.nama_kategori')
+            ->join('publikasi_kategori', 'publikasi_kategori.id = publikasi_konten.kategori_id')
+            ->groupStart()
+            ->where('publikasi_kategori.slug', 'galeri')
+            ->orLike('publikasi_kategori.nama_kategori', 'galeri', 'both')
+            ->groupEnd()
+            ->where('publikasi_konten.status', 'published');
+
+        if ($search) {
+            $query->like('publikasi_konten.judul', $search);
+        }
+
+        $data = [
+            'title' => 'Galeri Kegiatan',
+            'kontens' => $query->orderBy('published_at', 'DESC')->paginate(9, 'berita'),
+            'pager' => $this->kontenModel->pager,
+            'search' => $search
+        ];
+
+        return view('frontend/pages/artikel-list', $data);
+    }
 }

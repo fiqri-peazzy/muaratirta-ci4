@@ -56,7 +56,7 @@
             <span class="text-white truncate max-w-[200px]"><?= esc($konten->nama_kategori) ?></span>
         </nav>
 
-        <h1 class="text-3xl md:text-5xl lg:text-6xl font-display font-black text-white leading-tight mb-8 max-w-4xl" data-aos="fade-up">
+        <h1 class="text-2xl md:text-3xl lg:text-4xl font-display font-black text-white leading-tight mb-8 max-w-4xl" data-aos="fade-up">
             <?= esc($konten->judul) ?>
         </h1>
 
@@ -64,7 +64,7 @@
             <div class="flex items-center space-x-3">
                 <div class="w-12 h-12 rounded-full border-2 border-white/20 p-0.5">
                     <?php if ($konten->profile_pict): ?>
-                        <img src="<?= base_url('uploads/users/' . $konten->profile_pict) ?>" class="w-full h-full rounded-full object-cover">
+                        <img src="<?= base_url('uploads/profile/' . $konten->profile_pict) ?>" class="w-full h-full rounded-full object-cover">
                     <?php else: ?>
                         <div class="w-full h-full rounded-full bg-primary-500 flex items-center justify-center text-white font-bold">
                             <?= substr($konten->author_name, 0, 1) ?>

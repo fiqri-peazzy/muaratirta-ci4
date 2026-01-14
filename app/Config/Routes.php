@@ -8,7 +8,13 @@ use CodeIgniter\Router\RouteCollection;
 
 // Default route
 $routes->get('/', 'Home::index', ['as' => 'home']);
-$routes->get('contact', 'Contact::index', ['as' => 'contact']);
+$routes->get('kontak', 'Contact::index', ['as' => 'contact']);
+
+$routes->group('tagihan', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('', 'Tagihan::index', ['as' => 'tagihan']);
+    $routes->post('get_detail', 'Tagihan::get_detail', ['as' => 'tagihan.detail']);
+    $routes->get('foto/(:any)', 'Tagihan::foto_proxy/$1', ['as' => 'tagihan.foto']);
+});
 
 $routes->group('pasang-baru', ['namespace' => 'App\Controllers'], function ($routes) {
 
@@ -107,6 +113,8 @@ $routes->group('', ['filter' => 'auth', 'namespace' => 'App\Controllers'], funct
 });
 
 // Public Article Routes
-$routes->get('berita', 'Artikel::publicIndex', ['as' => 'berita.index']);
-$routes->get('berita/(:segment)', 'Artikel::publicDetail/$1', ['as' => 'berita.detail']);
-$routes->get('info-gangguan', 'Artikel::publicGangguan', ['as' => 'gangguan.index']);
+$routes->get('berita', 'Artikel::publicIndex', ['as' => 'news']);
+$routes->get('berita/(:segment)', 'Artikel::publicDetail/$1', ['as' => 'news.detail']);
+$routes->get('info-gangguan', 'Artikel::publicGangguan', ['as' => 'outage']);
+$routes->get('promo', 'Artikel::publicPromo', ['as' => 'promo']);
+$routes->get('galeri', 'Artikel::publicGallery', ['as' => 'gallery']);
