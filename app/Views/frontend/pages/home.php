@@ -60,7 +60,24 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.2);
     }
+
+    /* Swiper Pagination Customization */
+    .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+        background: #3b82f6;
+        opacity: 0.3;
+    }
+
+    .swiper-pagination-bullet-active {
+        width: 30px;
+        border-radius: 5px;
+        opacity: 1;
+        transition: all 0.3s ease;
+    }
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -398,83 +415,105 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
 
 <!-- Info Gangguan Section -->
 <?php if (!empty($info_gangguan)): ?>
-    <section class="py-20 bg-white">
+    <section class="py-24 bg-white overflow-hidden">
         <div class="container mx-auto px-4 lg:px-8">
             <!-- Section Header -->
-            <div class="flex justify-between items-end mb-12" data-aos="fade-up">
-                <div>
-                    <span class="inline-block px-4 py-2 bg-red-100 text-red-600 rounded-full text-sm font-semibold mb-4">
-                        Info Gangguan
-                    </span>
-                    <h2 class="text-4xl font-display font-bold text-gray-900">
-                        Informasi Gangguan Terkini
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-16" data-aos="fade-up">
+                <div class="text-center md:text-left mb-8 md:mb-0">
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-full text-xs font-bold mb-4 border border-red-100 uppercase tracking-widest">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                        </span>
+                        <span>Emergency Updates</span>
+                    </div>
+                    <h2 class="text-4xl lg:text-5xl font-display font-bold text-gray-900 leading-tight">
+                        Informasi Gangguan <br class="hidden md:block"> Layanan
                     </h2>
-                    <p class="text-gray-600 mt-2">Informasi terkini mengenai gangguan pelayanan di wilayah Anda</p>
                 </div>
-                <a
-                    href="<?= base_url('info-gangguan') ?>"
-                    class="hidden md:inline-flex items-center text-blue-600 font-semibold hover:text-blue-700">
-                    Lihat Semua
-                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                </a>
+                <!-- Swiper Navigation -->
+                <div class="flex items-center space-x-3">
+                    <button class="gangguan-prev w-12 h-12 rounded-xl border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button class="gangguan-next w-12 h-12 rounded-xl border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
-            <!-- Slider Container -->
-            <div class="relative" data-aos="fade-up" data-aos-delay="100">
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <?php foreach (array_slice($info_gangguan, 0, 3) as $gangguan): ?>
-                        <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                            <!-- Badge Gangguan -->
-                            <div class="absolute top-4 left-4 z-10">
-                                <span class="px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full">
-                                    GANGGUAN
-                                </span>
-                            </div>
+            <!-- Gangguan Slider -->
+            <div class="swiper-container gangguan-slider !pb-12" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+                    <?php foreach ($info_gangguan as $gangguan): ?>
+                        <div class="swiper-slide h-auto">
+                            <article class="h-full group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                                <!-- Image Wrapper -->
+                                <div class="relative h-60 overflow-hidden">
+                                    <?php if (isset($gangguan->thumbnail) && $gangguan->thumbnail): ?>
+                                        <img src="<?= base_url('uploads/publikasi/thumbnails/' . $gangguan->thumbnail) ?>" alt="<?= esc($gangguan->judul) ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <?php else: ?>
+                                        <div class="w-full h-full bg-gradient-to-br from-red-500/10 to-orange-500/10 flex items-center justify-center">
+                                            <svg class="w-20 h-20 text-red-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                            </svg>
+                                        </div>
+                                    <?php endif; ?>
 
-                            <!-- Image -->
-                            <div class="relative h-48 overflow-hidden">
-                                <img
-                                    src="<?= base_url('assets/info/' . ($gangguan['image'] ?? 'info-gangguan.jpg')) ?>"
-                                    alt="<?= esc($gangguan['judul']) ?>"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            </div>
-
-                            <!-- Content -->
-                            <div class="p-6">
-                                <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                                    <?= esc($gangguan['judul']) ?>
-                                </h3>
-
-                                <div class="flex items-center text-sm text-gray-500 mb-4 space-x-4">
-                                    <div class="flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
-                                        <?= esc($gangguan['author']) ?>
+                                    <div class="absolute top-4 left-4">
+                                        <span class="px-3 py-1 bg-white text-red-600 text-[10px] font-black uppercase tracking-widest rounded-lg shadow-sm">Penting</span>
                                     </div>
-                                    <div class="flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
-                                        <?= date('d M Y', strtotime($gangguan['tanggal_buat'])) ?>
+
+                                    <div class="absolute bottom-4 left-4 right-4">
+                                        <div class="bg-gray-900/40 backdrop-blur-md rounded-2xl p-4 flex items-center text-white">
+                                            <div class="flex-shrink-0 w-10 h-10 bg-white/20 rounded-xl flex flex-col items-center justify-center">
+                                                <span class="text-xs font-bold leading-none"><?= date('d', strtotime($gangguan->published_at ?? $gangguan->created_at)) ?></span>
+                                                <span class="text-[8px] uppercase font-bold"><?= date('M', strtotime($gangguan->published_at ?? $gangguan->created_at)) ?></span>
+                                            </div>
+                                            <div class="ml-4 overflow-hidden">
+                                                <p class="text-[9px] text-white/70 uppercase font-black tracking-widest mb-0.5">Wilayah</p>
+                                                <p class="text-xs font-bold truncate opacity-100">Kota Gorontalo</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <a
-                                    href="<?= base_url('info-gangguan-detail?id-ig=' . $gangguan['id']) ?>"
-                                    class="inline-flex items-center text-blue-600 font-semibold group-hover:translate-x-2 transition-transform">
-                                    Lihat Selengkapnya
-                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </a>
-                            </div>
+                                <div class="p-8">
+                                    <h3 class="text-xl font-display font-bold text-gray-900 mb-4 group-hover:text-red-600 transition-colors line-clamp-2 min-h-[3.5rem] leading-tight">
+                                        <?= esc($gangguan->judul) ?>
+                                    </h3>
+                                    <p class="text-sm text-gray-500 mb-8 line-clamp-3 leading-relaxed">
+                                        <?= $gangguan->excerpt ?: strip_tags(substr($gangguan->konten, 0, 150)) . '...' ?>
+                                    </p>
+
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400 overflow-hidden">
+                                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0">Petugas</p>
+                                                <p class="text-xs font-bold text-gray-700"><?= esc($gangguan->author_name ?? 'Tim Teknis') ?></p>
+                                            </div>
+                                        </div>
+                                        <a href="<?= base_url('berita/' . $gangguan->slug) ?>" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:text-white transition-all">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <div class="swiper-pagination !bottom-0"></div>
             </div>
         </div>
     </section>
@@ -482,91 +521,120 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
 
 <!-- Berita Section -->
 <?php if (!empty($berita)): ?>
-    <section class="py-20 bg-gray-50">
+    <section class="py-12 bg-gray-50 overflow-hidden">
         <div class="container mx-auto px-4 lg:px-8">
             <!-- Section Header -->
-            <div class="flex justify-between items-end mb-12" data-aos="fade-up">
-                <div>
-                    <span class="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-4">
-                        Berita Terkini
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-16" data-aos="fade-up">
+                <div class="text-center md:text-left mb-8 md:mb-0">
+                    <span class="inline-block px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black mb-4 border border-blue-100 uppercase tracking-widest">
+                        Company News & Events
                     </span>
-                    <h2 class="text-4xl font-display font-bold text-gray-900">
-                        Update Berita dan Kegiatan
+                    <h2 class="text-4xl lg:text-5xl font-display font-bold text-gray-900">
+                        Warta & <span class="text-blue-600">Kegiatan</span>
                     </h2>
-                    <p class="text-gray-600 mt-2">Update berita dan kegiatan PERUMDA Muara Tirta</p>
                 </div>
-                <a
-                    href="<?= base_url('berita') ?>"
-                    class="hidden md:inline-flex items-center text-blue-600 font-semibold hover:text-blue-700">
-                    Lihat Semua
-                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                </a>
+                <div class="flex items-center space-x-3">
+                    <button class="berita-prev w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button class="berita-next w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
-            <!-- Berita Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <?php foreach (array_slice($berita, 0, 3) as $item): ?>
-                    <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300" data-aos="fade-up" data-aos-delay="<?= 100 * array_search($item, $berita) ?>">
-                        <!-- Image with Date Badge -->
-                        <div class="relative h-56 overflow-hidden">
-                            <img
-                                src="<?= base_url('assets/info/' . $item['image']) ?>"
-                                alt="<?= esc($item['judul']) ?>"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute top-4 right-4 bg-white rounded-lg px-3 py-2 text-center shadow-lg">
-                                <div class="text-2xl font-bold text-blue-600"><?= date('d', strtotime($item['tanggal_buat'])) ?></div>
-                                <div class="text-xs text-gray-600"><?= date('M Y', strtotime($item['tanggal_buat'])) ?></div>
-                            </div>
-                            <div class="absolute top-4 left-4">
-                                <span class="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">
-                                    BERITA
-                                </span>
-                            </div>
-                        </div>
+            <!-- Berita Slider -->
+            <div class="swiper-container berita-slider !pb-12" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+                    <?php foreach ($berita as $item): ?>
+                        <div class="swiper-slide h-auto">
+                            <article class="h-full group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500">
+                                <!-- Image Section -->
+                                <div class="relative h-72 overflow-hidden">
+                                    <?php if (isset($item->thumbnail) && $item->thumbnail): ?>
+                                        <img src="<?= base_url('uploads/publikasi/thumbnails/' . $item->thumbnail) ?>" alt="<?= esc($item->judul) ?>" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                    <?php else: ?>
+                                        <div class="w-full h-full bg-blue-50 flex items-center justify-center">
+                                            <svg class="w-20 h-20 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
+                                    <?php endif; ?>
 
-                        <!-- Content -->
-                        <div class="p-6">
-                            <div class="flex items-center text-sm text-gray-500 mb-3">
-                                <div class="flex items-center mr-4">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                    <?= esc($item['author']) ?>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+
+                                    <!-- Author Overlay -->
+                                    <div class="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 rounded-full border-2 border-white/30 p-0.5">
+                                                <div class="w-full h-full rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold">
+                                                    <?= substr($item->author_name ?? 'A', 0, 1) ?>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p class="text-[8px] text-white/60 uppercase font-black tracking-widest mb-0.5">Penulis</p>
+                                                <p class="text-xs font-bold text-white"><?= esc($item->author_name ?? 'Admin MM') ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-[8px] text-white/60 uppercase font-black tracking-widest mb-0.5">Diterbitkan</p>
+                                            <p class="text-xs font-bold text-blue-400"><?= date('d M Y', strtotime($item->published_at ?? $item->created_at)) ?></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="absolute top-6 left-6">
+                                        <span class="bg-blue-600/90 backdrop-blur-sm text-white text-[9px] font-black px-4 py-2 rounded-xl shadow-lg uppercase tracking-[0.2em]">
+                                            <?= esc($item->nama_kategori) ?>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="flex items-center">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                                    </svg>
-                                    <?= esc($item['tag']) ?>
+
+                                <!-- Content Section -->
+                                <div class="p-8">
+                                    <h3 class="text-2xl font-display font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors line-clamp-2 min-h-[4rem] leading-tight">
+                                        <?= esc($item->judul) ?>
+                                    </h3>
+                                    <p class="text-gray-500 text-sm mb-8 line-clamp-3 leading-relaxed">
+                                        <?= $item->excerpt ?: strip_tags(substr($item->konten, 0, 160)) . '...' ?>
+                                    </p>
+
+                                    <a href="<?= base_url('berita/' . $item->slug) ?>" class="inline-flex items-center space-x-3 text-sm font-black text-gray-900 group/btn transition-all">
+                                        <span class="relative">
+                                            Baca Selengkapnya
+                                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover/btn:w-full transition-all duration-300"></span>
+                                        </span>
+                                        <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all transform group-hover:rotate-45">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </div>
+                                    </a>
                                 </div>
-                            </div>
-
-                            <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                                <?= esc($item['judul']) ?>
-                            </h3>
-
-                            <div class="border-t border-gray-100 pt-4">
-                                <a
-                                    href="<?= base_url('detail-berita?id-berita=' . $item['id']) ?>"
-                                    class="inline-flex items-center text-blue-600 font-semibold group-hover:translate-x-2 transition-transform">
-                                    Lihat Selengkapnya
-                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </a>
-                            </div>
+                            </article>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
+                <div class="swiper-pagination !bottom-0"></div>
+            </div>
+
+            <div class="text-center">
+                <a href="<?= base_url('berita') ?>" class="inline-flex items-center space-x-3 px-10 py-5 bg-white border border-gray-200 text-gray-900 rounded-3xl font-bold hover:shadow-xl transition-all group">
+                    <span>Eksplorasi Semua Berita</span>
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </a>
             </div>
         </div>
     </section>
 <?php endif; ?>
 
 <!-- Mitra Pembayaran Section -->
-<section class="py-20 bg-white">
+<section class="py-10 bg-white">
     <div class="container mx-auto px-4 lg:px-8">
         <!-- Section Header -->
         <div class="text-center mb-16" data-aos="fade-up">
@@ -611,11 +679,74 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
 <!-- AOS Animation Library -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- Swiper.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
     AOS.init({
         duration: 800,
         once: true,
         offset: 100
+    });
+
+    // Initialize Swiper for Info Gangguan
+    const gangguanSwiper = new Swiper('.gangguan-slider', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.gangguan-next',
+            prevEl: '.gangguan-prev',
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 1
+            },
+            768: {
+                slidesPerView: 2
+            },
+            1024: {
+                slidesPerView: 3
+            },
+        }
+    });
+
+    // Initialize Swiper for Berita
+    const beritaSwiper = new Swiper('.berita-slider', {
+        slidesPerView: 1,
+        spaceBetween: 40,
+        loop: true,
+        autoplay: {
+            delay: 6000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.berita-next',
+            prevEl: '.berita-prev',
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 1
+            },
+            768: {
+                slidesPerView: 2
+            },
+            1280: {
+                slidesPerView: 3
+            },
+        }
     });
 </script>
 
@@ -636,4 +767,5 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
         animation: marquee 20s linear infinite;
     }
 </style>
+
 <?= $this->endSection() ?>

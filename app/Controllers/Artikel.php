@@ -380,7 +380,108 @@ class Artikel extends BaseController
         $file->move(FCPATH . 'uploads/publikasi/content/', $fileName);
 
         $url = base_url('uploads/publikasi/content/' . $fileName);
-
         return $this->response->setJSON(['location' => $url]);
+    }
+
+    /**
+     * Public index for Berita
+     */
+    public function publicIndex()
+    {
+        $search = $this->request->getGet('search');
+
+        $query = $this->kontenModel->select('publikasi_konten.*, publikasi_kategori.nama_kategori')
+            ->join('publikasi_kategori', 'publikasi_kategori.id = publikasi_konten.kategori_id')
+            ->groupStart()
+            ->where('publikasi_kategori.slug', 'artikel-berita')
+            ->orWhere('publikasi_kategori.slug', 'berita')
+            ->orLike('publikasi_kategori.nama_kategori', 'berita', 'both')
+            ->groupEnd()
+            ->where('publikasi_konten.status', 'published');
+
+        if ($search) {
+            $query->like('publikasi_konten.judul', $search);
+        }
+
+        $data = [
+            'title' => 'Warta & Kegiatan',
+            'kontens' => $query->orderBy('published_at', 'DESC')->paginate(9, 'berita'),
+            'pager' => $this->kontenModel->pager,
+            'search' => $search
+        ];
+
+        return view('frontend/pages/artikel-list', $data);
+    }
+
+    /**
+     * Public detail for Berita/Gangguan
+     */
+    public function publicDetail($slug)
+    {
+        $konten = $this->kontenModel->select('publikasi_konten.*, publikasi_kategori.nama_kategori, users.nm_lengkap as author_name, users.profile_pict')
+            ->join('publikasi_kategori', 'publikasi_kategori.id = publikasi_konten.kategori_id')
+            ->join('users', 'users.id = publikasi_konten.author_id')
+            ->where('publikasi_konten.slug', $slug)
+            ->where('publikasi_konten.status', 'published')
+            ->first();
+
+        if (!$konten) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        // Increment view count
+        $this->kontenModel->incrementView($konten->id);
+
+        // Fetch Gallery images
+        $galeri = $this->galeriModel->where('konten_id', $konten->id)
+            ->orderBy('urutan', 'ASC')
+            ->findAll();
+
+        // Fetch Latest Articles for Sidebar
+        $latest = $this->kontenModel->select('publikasi_konten.*, publikasi_kategori.nama_kategori')
+            ->join('publikasi_kategori', 'publikasi_kategori.id = publikasi_konten.kategori_id')
+            ->where('publikasi_konten.id !=', $konten->id)
+            ->where('status', 'published')
+            ->orderBy('published_at', 'DESC')
+            ->limit(5)
+            ->findAll();
+
+        $data = [
+            'title' => $konten->judul,
+            'konten' => $konten,
+            'galeri' => $galeri,
+            'latest' => $latest
+        ];
+
+        return view('frontend/pages/artikel-detail', $data);
+    }
+
+    /**
+     * Public index for Info Gangguan
+     */
+    public function publicGangguan()
+    {
+        $search = $this->request->getGet('search');
+
+        $query = $this->kontenModel->select('publikasi_konten.*, publikasi_kategori.nama_kategori')
+            ->join('publikasi_kategori', 'publikasi_kategori.id = publikasi_konten.kategori_id')
+            ->groupStart()
+            ->where('publikasi_kategori.slug', 'info-gangguan')
+            ->orLike('publikasi_kategori.nama_kategori', 'gangguan', 'both')
+            ->groupEnd()
+            ->where('publikasi_konten.status', 'published');
+
+        if ($search) {
+            $query->like('publikasi_konten.judul', $search);
+        }
+
+        $data = [
+            'title' => 'Informasi Gangguan & Perbaikan',
+            'kontens' => $query->orderBy('published_at', 'DESC')->paginate(9, 'gangguan'),
+            'pager' => $this->kontenModel->pager,
+            'search' => $search
+        ];
+
+        return view('frontend/pages/artikel-list', $data);
     }
 }

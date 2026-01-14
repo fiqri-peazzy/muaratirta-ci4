@@ -105,3 +105,8 @@ $routes->group('', ['filter' => 'auth', 'namespace' => 'App\Controllers'], funct
         $routes->post('update', 'Settings::update', ['as' => 'settings.update']);
     });
 });
+
+// Public Article Routes
+$routes->get('berita', 'Artikel::publicIndex', ['as' => 'berita.index']);
+$routes->get('berita/(:segment)', 'Artikel::publicDetail/$1', ['as' => 'berita.detail']);
+$routes->get('info-gangguan', 'Artikel::publicGangguan', ['as' => 'gangguan.index']);
