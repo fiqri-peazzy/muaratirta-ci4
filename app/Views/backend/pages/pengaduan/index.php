@@ -186,8 +186,8 @@
                                             'urgent' => 'danger'
                                         ];
                                         ?>
-                                        <span class="badge bg-<?= $prioritasBadge[$row->prioritas] ?> badge-prioritas">
-                                            <?= ucfirst($row->prioritas) ?>
+                                        <span class="badge bg-<?= $prioritasBadge[$row->prioritas] ?? 'secondary' ?> badge-prioritas">
+                                            <?= ucfirst($row->prioritas ?: 'Normal') ?>
                                         </span>
                                     </td>
                                     <td>
@@ -199,7 +199,7 @@
                                             'ditolak' => 'danger'
                                         ];
                                         ?>
-                                        <span class="badge bg-<?= $statusBadge[$row->status] ?>">
+                                        <span class="badge bg-<?= $statusBadge[$row->status] ?? 'secondary' ?>">
                                             <?= ucfirst($row->status) ?>
                                         </span>
                                     </td>

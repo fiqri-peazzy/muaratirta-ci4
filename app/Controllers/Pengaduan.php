@@ -200,11 +200,205 @@ class Pengaduan extends BaseController
      */
     private function getLogoBase64()
     {
-        $logoPath = FCPATH . 'backend/assets/compiled/svg/logo.svg';
+        $logoPath = FCPATH . 'backend/assets/images/logo/logo.png';
         if (file_exists($logoPath)) {
             $logoData = file_get_contents($logoPath);
-            return 'data:image/svg+xml;base64,' . base64_encode($logoData);
+            return 'data:image/png;base64,' . base64_encode($logoData);
         }
         return null;
+    }
+
+    /**
+     * Display public complaint form
+     */
+    public function formPublic()
+    {
+        $data = [
+            'title' => 'Lapor Keluhan',
+            'description' => 'Laporkan keluhan atau gangguan layanan air PDAM Muara Tirta secara online',
+            'categories' => $this->getKategoriList()
+        ];
+
+        return view('frontend/pages/form-lk', $data);
+    }
+
+    /**
+     * Submit public complaint
+     */
+    public function submitPublic()
+    {
+        $validation = \Config\Services::validation();
+
+        $validation->setRules([
+            'nama_lengkap' => 'required|min_length[3]',
+            'no_hp' => 'required|numeric|min_length[10]',
+            'alamat' => 'required|min_length[10]',
+            'kategori' => 'required',
+            'isi_pengaduan' => 'required|min_length[20]',
+            'foto' => 'uploaded[foto]|max_size[foto,2048]|is_image[foto]'
+        ], [
+            'nama_lengkap' => [
+                'required' => 'Nama lengkap wajib diisi',
+                'min_length' => 'Nama minimal 3 karakter'
+            ],
+            'no_hp' => [
+                'required' => 'Nomor HP wajib diisi',
+                'numeric' => 'Nomor HP harus angka',
+                'min_length' => 'Nomor HP minimal 10 digit'
+            ],
+            'alamat' => [
+                'required' => 'Alamat wajib diisi',
+                'min_length' => 'Alamat minimal 10 karakter'
+            ],
+            'kategori' => [
+                'required' => 'Kategori keluhan wajib dipilih'
+            ],
+            'isi_pengaduan' => [
+                'required' => 'Isi pengaduan wajib diisi',
+                'min_length' => 'Isi pengaduan minimal 20 karakter'
+            ],
+            'foto' => [
+                'uploaded' => 'Foto bukti wajib diupload',
+                'max_size' => 'Ukuran foto maksimal 2MB',
+                'is_image' => 'File harus berupa gambar'
+            ]
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $validation->getErrors()
+            ]);
+        }
+
+        // Generate nomor pengaduan
+        $noPengaduan = $this->pengaduanModel->generateNomorPengaduan();
+
+        // Handle file upload
+        $foto = $this->request->getFile('foto');
+        $fotoName = null;
+
+        if ($foto && $foto->isValid() && !$foto->hasMoved()) {
+            // Sanitize nomor pengaduan for filename
+            $safeNoPengaduan = str_replace(['/', '\\'], '-', $noPengaduan);
+            $fotoName = $safeNoPengaduan . '_' . time() . '.' . $foto->getExtension();
+
+            $uploadDir = FCPATH . 'uploads/pengaduan/';
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            try {
+                $foto->move($uploadDir, $fotoName);
+            } catch (\Throwable $e) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Gagal upload foto: ' . $e->getMessage(),
+                    'foto' => $fotoName,
+                ]);
+            }
+        }
+
+        // Prepare data
+        $data = [
+            'no_pengaduan' => $noPengaduan,
+            'id_pel' => $this->request->getPost('id_pel'),
+            'nm_lengkap' => $this->request->getPost('nama_lengkap'),
+            'alamat' => $this->request->getPost('alamat'),
+            'no_hp' => $this->request->getPost('no_hp'),
+            'email' => $this->request->getPost('email'),
+            'kategori' => $this->request->getPost('kategori'),
+            'isi_pengaduan' => $this->request->getPost('isi_pengaduan'),
+            'foto' => $fotoName,
+            'status' => 'pending',
+            'prioritas' => 'sedang'
+        ];
+
+        // Track user info
+        $this->pengaduanModel->trackUserInfo($data);
+
+        // Save to database
+        if ($this->pengaduanModel->insert($data)) {
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Pengaduan berhasil dikirim',
+                'no_pengaduan' => $noPengaduan,
+                'redirect' => base_url('lapor-keluhan/sukses?no=' . $noPengaduan)
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'success' => false,
+            'message' => 'Gagal menyimpan pengaduan'
+        ]);
+    }
+
+    /**
+     * Success page
+     */
+    public function sukses()
+    {
+        $noPengaduan = $this->request->getGet('no');
+
+        if (!$noPengaduan) {
+            return redirect()->to('lapor-keluhan');
+        }
+
+        $pengaduan = $this->pengaduanModel->where('no_pengaduan', $noPengaduan)->first();
+
+        $data = [
+            'title' => 'Pengaduan Berhasil',
+            'pengaduan' => $pengaduan
+        ];
+
+        return view('frontend/pages/sukses-lk', $data);
+    }
+
+    /**
+     * Tracking page
+     */
+    public function tracking()
+    {
+        $data = [
+            'title' => 'Lacak Status Pengaduan'
+        ];
+
+        return view('frontend/pages/tracking-lk', $data);
+    }
+
+    /**
+     * Check status via AJAX
+     */
+    public function checkStatus()
+    {
+        $noPengaduan = $this->request->getPost('no_pengaduan');
+
+        if (!$noPengaduan) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Nomor pengaduan tidak boleh kosong'
+            ]);
+        }
+
+        $pengaduan = $this->pengaduanModel->getPengaduanWithHandler(null);
+        $pengaduan = array_filter($pengaduan, function ($item) use ($noPengaduan) {
+            return $item->no_pengaduan === $noPengaduan;
+        });
+
+        if (empty($pengaduan)) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Pengaduan tidak ditemukan'
+            ]);
+        }
+
+        $pengaduan = reset($pengaduan);
+
+        return $this->response->setJSON([
+            'success' => true,
+            'data' => $pengaduan
+        ]);
     }
 }

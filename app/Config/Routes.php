@@ -8,6 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 
 // Default route
 $routes->get('/', 'Home::index', ['as' => 'home']);
+$routes->get('contact', 'Contact::index', ['as' => 'contact']);
 
 $routes->group('pasang-baru', ['namespace' => 'App\Controllers'], function ($routes) {
 
@@ -18,6 +19,13 @@ $routes->group('pasang-baru', ['namespace' => 'App\Controllers'], function ($rou
     $routes->post('check-status', 'PasangBaru::checkStatus', ['as' => 'pasang_baru.check_status']);
 });
 
+$routes->group('lapor-keluhan', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('', 'Pengaduan::formPublic', ['as' => 'lapor_keluhan']);
+    $routes->post('submit', 'Pengaduan::submitPublic', ['as' => 'lapor_keluhan.submit']);
+    $routes->get('sukses', 'Pengaduan::sukses', ['as' => 'lapor_keluhan.sukses']);
+    $routes->get('tracking', 'Pengaduan::tracking', ['as' => 'lapor_keluhan.tracking']);
+    $routes->post('check-status', 'Pengaduan::checkStatus', ['as' => 'lapor_keluhan.check_status']);
+});
 // Authentication Routes
 $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('login', 'Auth::index', ['as' => 'login']);

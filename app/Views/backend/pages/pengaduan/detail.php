@@ -272,7 +272,7 @@
                         'selesai' => ['icon' => 'check-circle', 'label' => 'Selesai'],
                         'ditolak' => ['icon' => 'x-circle', 'label' => 'Ditolak']
                     ];
-                    $current = $statusConfig[$pengaduan->status];
+                    $current = $statusConfig[$pengaduan->status] ?? $statusConfig['pending'];
                     ?>
                     <i class="bi bi-<?= $current['icon'] ?>" style="font-size: 4rem;"></i>
                     <h4 class="mt-3 mb-0"><?= $current['label'] ?></h4>
@@ -290,7 +290,7 @@
                         'tinggi' => ['color' => 'warning', 'icon' => 'arrow-up'],
                         'urgent' => ['color' => 'danger', 'icon' => 'exclamation-triangle-fill']
                     ];
-                    $prioritas = $prioritasConfig[$pengaduan->prioritas];
+                    $prioritas = $prioritasConfig[$pengaduan->prioritas] ?? $prioritasConfig['sedang'];
                     ?>
                     <span class="badge bg-<?= $prioritas['color'] ?>" style="font-size: 1.2rem; padding: 0.75rem 1.5rem;">
                         <i class="bi bi-<?= $prioritas['icon'] ?> me-2"></i>
