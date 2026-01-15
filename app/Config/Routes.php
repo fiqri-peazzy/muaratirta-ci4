@@ -9,6 +9,19 @@ use CodeIgniter\Router\RouteCollection;
 // Default route
 $routes->get('/', 'Home::index', ['as' => 'home']);
 $routes->get('kontak', 'Contact::index', ['as' => 'contact']);
+$routes->get('about', function () {
+    return view('frontend/pages/about', ['title' => 'Tentang Kami']);
+}, ['as' => 'about']);
+$routes->get('visi-misi', function () {
+    return view('frontend/pages/visi-misi', ['title' => 'Visi & Misi']);
+}, ['as' => 'visi_misi']);
+$routes->get('infrastruktur', function () {
+    return view('frontend/pages/infrastruktur', ['title' => 'Infrastruktur']);
+}, ['as' => 'infrastruktur']);
+
+$routes->group('organisasi', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('', 'Organisasi::publicIndex', ['as' => 'public.organisasi']);
+});
 
 $routes->group('tagihan', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('', 'Tagihan::index', ['as' => 'tagihan']);
@@ -37,7 +50,13 @@ $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('login', 'Auth::index', ['as' => 'login']);
     $routes->post('login', 'Auth::attemptLogin', ['as' => 'login.attempt']);
     $routes->get('logout', 'Auth::logout', ['as' => 'logout']);
+
+    // Forgot Password Routes
     $routes->get('forgot-password', 'Auth::forgotPassword', ['as' => 'forgot_password']);
+    $routes->post('send-reset-otp', 'Auth::sendResetOTP', ['as' => 'send_reset_otp']);
+    $routes->get('verify-otp', 'Auth::verifyOTP', ['as' => 'verify_otp']);
+    $routes->post('verify-otp', 'Auth::processVerifyOTP', ['as' => 'process_verify_otp']);
+    $routes->get('reset-password-form', 'Auth::resetPasswordForm', ['as' => 'reset_password_form']);
     $routes->post('reset-password', 'Auth::resetPassword', ['as' => 'reset_password']);
 });
 
@@ -138,6 +157,26 @@ $routes->group('', ['filter' => 'auth', 'namespace' => 'App\Controllers'], funct
         $routes->get('', 'Settings::index', ['as' => 'settings.index']);
         $routes->post('update', 'Settings::update', ['as' => 'settings.update']);
     });
+
+    // AI Assistant Admin Management
+    $routes->group('chat-assistant', ['filter' => 'auth:1', 'namespace' => 'App\Controllers'], function ($routes) {
+        $routes->get('', 'ChatAssistant::index', ['as' => 'admin.chat.index']);
+
+        // FAQ
+        $routes->post('faq/store', 'ChatAssistant::faqStore', ['as' => 'admin.chat.faq.store']);
+        $routes->post('faq/update/(:num)', 'ChatAssistant::faqUpdate/$1', ['as' => 'admin.chat.faq.update']);
+        $routes->get('faq/delete/(:num)', 'ChatAssistant::faqDelete/$1', ['as' => 'admin.chat.faq.delete']);
+        $routes->post('faq/toggle/(:num)', 'ChatAssistant::faqToggle/$1', ['as' => 'admin.chat.faq.toggle']);
+
+        // Info
+        $routes->post('info/store', 'ChatAssistant::infoStore', ['as' => 'admin.chat.info.store']);
+        $routes->post('info/update/(:num)', 'ChatAssistant::infoUpdate/$1', ['as' => 'admin.chat.info.update']);
+        $routes->get('info/delete/(:num)', 'ChatAssistant::infoDelete/$1', ['as' => 'admin.chat.info.delete']);
+        $routes->post('info/toggle/(:num)', 'ChatAssistant::infoToggle/$1', ['as' => 'admin.chat.info.toggle']);
+
+        // History
+        $routes->get('history', 'ChatAssistant::history', ['as' => 'admin.chat.history']);
+    });
 });
 
 // Public Article Routes
@@ -146,3 +185,9 @@ $routes->get('berita/(:segment)', 'Artikel::publicDetail/$1', ['as' => 'news.det
 $routes->get('info-gangguan', 'Artikel::publicGangguan', ['as' => 'outage']);
 $routes->get('promo', 'Artikel::publicPromo', ['as' => 'promo']);
 $routes->get('galeri', 'Artikel::publicGallery', ['as' => 'gallery']);
+
+// AI Assistant API Routes
+$routes->group('api/chat', ['namespace' => 'App\Controllers\Api'], function ($routes) {
+    $routes->post('send', 'ChatHandler::index', ['as' => 'api.chat.send']);
+    $routes->post('submit-pengaduan', 'ChatHandler::submitPengaduan', ['as' => 'api.chat.submit_pengaduan']);
+});

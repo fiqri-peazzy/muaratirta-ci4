@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Total Pelanggan</h6>
-                                <h6 class="font-extrabold mb-0">12,543</h6>
+                                <h6 class="font-extrabold mb-0"><?= number_format($stats['total_pelanggan'] ?? 0) ?></h6>
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Pengaduan Aktif</h6>
-                                <h6 class="font-extrabold mb-0">34</h6>
+                                <h6 class="font-extrabold mb-0"><?= $stats['pengaduan_aktif'] ?? 0 ?></h6>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Artikel</h6>
-                                <h6 class="font-extrabold mb-0">145</h6>
+                                <h6 class="font-extrabold mb-0"><?= $stats['total_artikel'] ?? 0 ?></h6>
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Pengumuman</h6>
-                                <h6 class="font-extrabold mb-0">23</h6>
+                                <h6 class="font-extrabold mb-0"><?= $stats['total_pengumuman'] ?? 0 ?></h6>
                             </div>
                         </div>
                     </div>
@@ -97,54 +97,47 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="col-3">
-                                            <div class="d-flex align-items-center">
-                                                <p class="font-bold ms-3 mb-0">10:30</p>
-                                            </div>
-                                        </td>
-                                        <td class="col-auto">
-                                            <p class="mb-0">Pengaduan baru dari pelanggan</p>
-                                        </td>
-                                        <td class="col-auto">
-                                            <p class="mb-0">Ahmad Yani</p>
-                                        </td>
-                                        <td class="col-auto">
-                                            <span class="badge bg-warning">Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-3">
-                                            <div class="d-flex align-items-center">
-                                                <p class="font-bold ms-3 mb-0">09:15</p>
-                                            </div>
-                                        </td>
-                                        <td class="col-auto">
-                                            <p class="mb-0">Artikel baru dipublikasikan</p>
-                                        </td>
-                                        <td class="col-auto">
-                                            <p class="mb-0">Siti Rahma</p>
-                                        </td>
-                                        <td class="col-auto">
-                                            <span class="badge bg-success">Published</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-3">
-                                            <div class="d-flex align-items-center">
-                                                <p class="font-bold ms-3 mb-0">08:45</p>
-                                            </div>
-                                        </td>
-                                        <td class="col-auto">
-                                            <p class="mb-0">Pengaduan diselesaikan</p>
-                                        </td>
-                                        <td class="col-auto">
-                                            <p class="mb-0">Budi Santoso</p>
-                                        </td>
-                                        <td class="col-auto">
-                                            <span class="badge bg-success">Resolved</span>
-                                        </td>
-                                    </tr>
+                                    <?php if (!empty($recentActivities)): ?>
+                                        <?php foreach ($recentActivities as $activity): ?>
+                                            <tr>
+                                                <td class="col-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <p class="font-bold ms-3 mb-0"><?= date('H:i', strtotime($activity->created_at)) ?></p>
+                                                    </div>
+                                                </td>
+                                                <td class="col-auto">
+                                                    <p class="mb-0"><?= esc($activity->description) ?></p>
+                                                </td>
+                                                <td class="col-auto">
+                                                    <p class="mb-0"><?= esc($activity->user_name ?? 'System') ?></p>
+                                                </td>
+                                                <td class="col-auto">
+                                                    <?php
+                                                    $badgeClass = match ($activity->status) {
+                                                        'success' => 'bg-success',
+                                                        'pending' => 'bg-warning',
+                                                        'failed' => 'bg-danger',
+                                                        default => 'bg-secondary'
+                                                    };
+                                                    $statusText = match ($activity->status) {
+                                                        'success' => 'Berhasil',
+                                                        'pending' => 'Pending',
+                                                        'failed' => 'Gagal',
+                                                        default => ucfirst($activity->status)
+                                                    };
+                                                    ?>
+                                                    <span class="badge <?= $badgeClass ?>"><?= $statusText ?></span>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted py-4">
+                                                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                                Belum ada aktivitas
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -182,27 +175,27 @@
             </div>
             <div class="card-content pb-4">
                 <?php if (is_admin()): ?>
-                <div class="px-4 py-2">
-                    <a href="<?= url_to('users.index') ?>" class="btn btn-block btn-xl btn-outline-primary font-bold mt-3">
-                        <i class="bi bi-people me-2"></i> Kelola User
-                    </a>
-                </div>
+                    <div class="px-4 py-2">
+                        <a href="<?= url_to('users.index') ?>" class="btn btn-block btn-xl btn-outline-primary font-bold mt-3">
+                            <i class="bi bi-people me-2"></i> Kelola User
+                        </a>
+                    </div>
                 <?php endif; ?>
 
                 <?php if (has_access(['1', '2'])): ?>
-                <div class="px-4 py-2">
-                    <a href="<?= url_to('pengaduan.index') ?>" class="btn btn-block btn-xl btn-outline-success font-bold mt-3">
-                        <i class="bi bi-chat-dots me-2"></i> Pengaduan
-                    </a>
-                </div>
+                    <div class="px-4 py-2">
+                        <a href="<?= url_to('pengaduan.index') ?>" class="btn btn-block btn-xl btn-outline-success font-bold mt-3">
+                            <i class="bi bi-chat-dots me-2"></i> Pengaduan
+                        </a>
+                    </div>
                 <?php endif; ?>
 
                 <?php if (has_access(['1', '3'])): ?>
-                <div class="px-4 py-2">
-                    <a href="<?= url_to('artikel.index') ?>" class="btn btn-block btn-xl btn-outline-info font-bold mt-3">
-                        <i class="bi bi-newspaper me-2"></i> Artikel
-                    </a>
-                </div>
+                    <div class="px-4 py-2">
+                        <a href="<?= url_to('artikel.index') ?>" class="btn btn-block btn-xl btn-outline-info font-bold mt-3">
+                            <i class="bi bi-newspaper me-2"></i> Artikel
+                        </a>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>
@@ -216,15 +209,15 @@
                 <div class="mt-4">
                     <div class="d-flex justify-content-between mb-2">
                         <span>Pengaduan Masuk</span>
-                        <span class="text-primary fw-bold">12</span>
+                        <span class="text-primary fw-bold"><?= $todayStats['pengaduan_masuk'] ?? 0 ?></span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Pengaduan Selesai</span>
-                        <span class="text-success fw-bold">8</span>
+                        <span class="text-success fw-bold"><?= $todayStats['pengaduan_selesai'] ?? 0 ?></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Artikel Dibuat</span>
-                        <span class="text-info fw-bold">3</span>
+                        <span class="text-info fw-bold"><?= $todayStats['artikel_dibuat'] ?? 0 ?></span>
                     </div>
                 </div>
             </div>

@@ -276,17 +276,23 @@
                         'selesai' => 'Selesai',
                         'ditolak' => 'Ditolak'
                     ];
+                    // Safety check for status
+                    $currentStatus = $pengaduan->status ?? 'pending';
+                    $statusText = $statusLabel[$currentStatus] ?? 'Menunggu Ditangani';
                     ?>
-                    <span class="status-badge status-<?= $pengaduan->status ?>">
-                        <?= $statusLabel[$pengaduan->status] ?>
+                    <span class="status-badge status-<?= $currentStatus ?>">
+                        <?= $statusText ?>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="label">Tingkat Prioritas</td>
                 <td class="value">
-                    <span class="prioritas-badge prioritas-<?= $pengaduan->prioritas ?>">
-                        <?= strtoupper($pengaduan->prioritas) ?>
+                    <?php
+                    $currentPrioritas = $pengaduan->prioritas ?? 'sedang';
+                    ?>
+                    <span class="prioritas-badge prioritas-<?= $currentPrioritas ?>">
+                        <?= strtoupper($currentPrioritas) ?>
                     </span>
                 </td>
             </tr>

@@ -15,6 +15,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -90,36 +95,12 @@
         </svg>
     </button>
 
-    <!-- Chat Widget Placeholder -->
-    <div
-        x-data="{ open: false }"
-        class="fixed bottom-8 right-24 z-50">
-        <button
-            @click="open = !open"
-            class="bg-purple-600 hover:bg-purple-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-        </button>
-
-        <!-- Chat Window (placeholder for now) -->
-        <div
-            x-show="open"
-            x-transition
-            class="absolute bottom-20 right-0 w-80 bg-white rounded-2xl shadow-2xl"
-            style="display: none;">
-            <div class="p-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-t-2xl">
-                <h3 class="font-semibold">Tirta Assistant</h3>
-                <p class="text-sm opacity-90">Virtual Assistant PDAM</p>
-            </div>
-            <div class="h-64 p-4 text-center text-gray-500">
-                Chat widget akan diintegrasikan nanti
-            </div>
-        </div>
-    </div>
+    <!-- Chat Widget -->
+    <?= $this->include('frontend/components/chat-widget') ?>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <?= $this->renderSection('scripts') ?>
 
 </body>

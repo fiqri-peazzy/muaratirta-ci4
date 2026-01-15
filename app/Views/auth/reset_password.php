@@ -11,8 +11,8 @@
     </div>
 
     <!-- Title -->
-    <!-- <h1 class="auth-title">Selamat Datang</h1>
-    <p class="auth-subtitle">Silakan login untuk melanjutkan</p> -->
+    <h1 class="auth-title">Reset Password</h1>
+    <p class="auth-subtitle">Masukkan password baru Anda</p>
 
     <!-- Alerts -->
     <?php if (session()->getFlashdata('success')): ?>
@@ -45,54 +45,47 @@
         </div>
     <?php endif; ?>
 
-    <!-- Login Form -->
-    <form action="<?= url_to('login.attempt') ?>" method="POST">
+    <!-- Form -->
+    <form action="<?= url_to('reset_password') ?>" method="POST">
         <?= csrf_field() ?>
 
-        <!-- Username/Email Input -->
-        <div class="form-group">
-            <i class="bi bi-person form-control-icon"></i>
-            <input type="text"
-                class="form-control w-100"
-                name="login"
-                placeholder="Username atau Email"
-                value="<?= old('login') ?>"
-                required
-                autofocus>
-        </div>
-
-        <!-- Password Input -->
+        <!-- New Password Input -->
         <div class="form-group">
             <i class="bi bi-lock form-control-icon"></i>
             <input type="password"
                 class="form-control"
                 name="password"
                 id="password"
-                placeholder="Password"
+                placeholder="Password Baru"
                 style="padding-right: 3rem;"
-                required>
+                required
+                autofocus>
             <i class="bi bi-eye password-toggle" id="togglePassword" onclick="togglePassword()"></i>
         </div>
 
-        <!-- Remember Me -->
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="rememberMe">
-            <label class="form-check-label" for="rememberMe">
-                Ingat Saya
-            </label>
+        <!-- Confirm Password Input -->
+        <div class="form-group">
+            <i class="bi bi-lock-fill form-control-icon"></i>
+            <input type="password"
+                class="form-control"
+                name="password_confirm"
+                id="password_confirm"
+                placeholder="Konfirmasi Password Baru"
+                style="padding-right: 3rem;"
+                required>
+            <i class="bi bi-eye password-toggle" id="togglePasswordConfirm" onclick="togglePasswordConfirm()"></i>
         </div>
+
+        <p style="color: #718096; font-size: 13px; margin-bottom: 20px;">
+            <i class="bi bi-info-circle"></i> Password minimal 6 karakter
+        </p>
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">
-            <i class="bi bi-box-arrow-in-right"></i>
-            <span>Masuk</span>
+            <i class="bi bi-check-circle"></i>
+            <span>Reset Password</span>
         </button>
     </form>
-
-    <!-- Forgot Password Link -->
-    <div class="forgot-password">
-        <a href="<?= url_to('forgot_password') ?>">Lupa Password?</a>
-    </div>
 
     <!-- Footer -->
     <div class="auth-footer">
@@ -118,7 +111,22 @@
         }
     }
 
-    // Auto dismiss alerts after 5 seconds
+    function togglePasswordConfirm() {
+        const passwordInput = document.getElementById('password_confirm');
+        const toggleIcon = document.getElementById('togglePasswordConfirm');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('bi-eye');
+            toggleIcon.classList.add('bi-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('bi-eye-slash');
+            toggleIcon.classList.add('bi-eye');
+        }
+    }
+
+    // Auto dismiss alerts
     setTimeout(function() {
         const alerts = document.querySelectorAll('.alert');
         alerts.forEach(function(alert) {

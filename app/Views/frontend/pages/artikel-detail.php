@@ -32,6 +32,7 @@
     }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -124,14 +125,16 @@
                         </h2>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 galeri-grid">
                             <?php foreach ($galeri as $img): ?>
-                                <div class="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all">
+                                <a href="<?= base_url('uploads/publikasi/galeri/' . $img->image_path) ?>"
+                                    class="glightbox relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all"
+                                    data-gallery="gallery1">
                                     <img src="<?= base_url('uploads/publikasi/galeri/' . $img->image_path) ?>" class="w-full h-full object-cover">
                                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                         </svg>
                                     </div>
-                                </div>
+                                </a>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -235,10 +238,15 @@
 
 <?= $this->section('scripts') ?>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
 <script>
     AOS.init({
         duration: 800,
         once: true
+    });
+
+    const lightbox = GLightbox({
+        selector: '.glightbox'
     });
 </script>
 <?= $this->endSection() ?>

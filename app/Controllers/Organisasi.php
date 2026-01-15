@@ -593,6 +593,37 @@ class Organisasi extends BaseController
         ]);
     }
 
+    public function publicIndex()
+    {
+        $allTingkat = $this->tingkatJabatanModel->where('is_active', '1')->orderBy('level', 'ASC')->findAll();
+        $allBagian = $this->bagianModel->where('is_active', '1')->orderBy('urutan', 'ASC')->findAll();
+
+        $staffRaw = $this->staffModel->getStaffWithDetails();
+
+        $topLevelStaff = [];
+        $departmentalStaff = []; // [bagian_id => [level => [staff]]]
+
+        foreach ($staffRaw as $s) {
+            if ($s->is_active != '1') continue;
+
+            if ($s->level <= 3) {
+                $topLevelStaff[$s->level][] = $s;
+            } else {
+                $departmentalStaff[$s->bagian_id][$s->level][] = $s;
+            }
+        }
+
+        $data = [
+            'title' => 'Struktur Organisasi',
+            'topLevelStaff' => $topLevelStaff,
+            'departmentalStaff' => $departmentalStaff,
+            'allBagian' => $allBagian,
+            'allTingkat' => $allTingkat,
+        ];
+
+        return view('frontend/pages/organisasi/public-index', $data);
+    }
+
     /**
      * Resize image helper
      */

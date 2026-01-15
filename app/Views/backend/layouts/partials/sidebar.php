@@ -85,6 +85,21 @@ $segment2 = $currentUri->getSegment(2);
                         </a>
                     </li>
 
+                    <li class="sidebar-item has-sub <?= in_array($segment1, ['chat-assistant']) ? 'active' : '' ?>">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-robot"></i>
+                            <span>Asisten AI</span>
+                        </a>
+                        <ul class="submenu <?= in_array($segment1, ['chat-assistant']) ? 'active' : '' ?>">
+                            <li class="submenu-item <?= $segment1 == 'chat-assistant' && $segment2 == '' ? 'active' : '' ?>">
+                                <a href="<?= route_to('admin.chat.index') ?>" class="submenu-link">Referensi & FAQ</a>
+                            </li>
+                            <li class="submenu-item <?= $segment1 == 'chat-assistant' && $segment2 == 'history' ? 'active' : '' ?>">
+                                <a href="<?= route_to('admin.chat.history') ?>" class="submenu-link">Riwayat Chat</a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="sidebar-item has-sub <?= in_array($segment1, ['organisasi']) ? 'active' : '' ?>">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-diagram-3-fill"></i>

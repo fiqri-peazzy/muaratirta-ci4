@@ -521,25 +521,31 @@ class Artikel extends BaseController
     {
         $search = $this->request->getGet('search');
 
+        // Fetch articles that have at least one image in publikasi_galeri
         $query = $this->kontenModel->select('publikasi_konten.*, publikasi_kategori.nama_kategori')
             ->join('publikasi_kategori', 'publikasi_kategori.id = publikasi_konten.kategori_id')
-            ->groupStart()
-            ->where('publikasi_kategori.slug', 'galeri')
-            ->orLike('publikasi_kategori.nama_kategori', 'galeri', 'both')
-            ->groupEnd()
-            ->where('publikasi_konten.status', 'published');
+            ->join('publikasi_galeri', 'publikasi_galeri.konten_id = publikasi_konten.id')
+            ->where('publikasi_konten.status', 'published')
+            ->groupBy('publikasi_konten.id');
 
         if ($search) {
             $query->like('publikasi_konten.judul', $search);
         }
 
+        $kontens = $query->orderBy('published_at', 'DESC')->paginate(9, 'gallery');
+
+        // For each article, fetch all its gallery images
+        foreach ($kontens as &$item) {
+            $item->images = $this->galeriModel->getImagesByKonten($item->id);
+        }
+
         $data = [
-            'title' => 'Galeri Kegiatan',
-            'kontens' => $query->orderBy('published_at', 'DESC')->paginate(9, 'berita'),
+            'title' => 'Galeri Foto & Dokumentasi',
+            'kontens' => $kontens,
             'pager' => $this->kontenModel->pager,
             'search' => $search
         ];
 
-        return view('frontend/pages/artikel-list', $data);
+        return view('frontend/pages/galeri', $data);
     }
 }

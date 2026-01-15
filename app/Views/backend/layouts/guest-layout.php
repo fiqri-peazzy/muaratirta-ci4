@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,8 @@
     <title><?= $title ?? 'PERUMDA AIR MINUM MUARA TIRTA' ?></title>
 
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="<?= base_url('backend/assets/vendors/bootstrap-icons/bootstrap-icons.css') ?>">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.13.1/font/bootstrap-icons.min.css" integrity="sha512-t7Few9xlddEmgd3oKZQahkNI4dS6l80+eGEzFQiqtyVYdvcSG2D3Iub77R20BdotfRPA9caaRkg1tyaJiPmO0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Backend CSS -->
     <link rel="stylesheet" href="<?= base_url('backend/assets/css/bootstrap.css') ?>">
     <link rel="stylesheet" href="<?= base_url('backend/assets/css/app.css') ?>">
@@ -28,7 +29,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #ffffff;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -42,11 +43,11 @@
         }
 
         .auth-card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            background: #ffffff;
             border-radius: 20px;
             padding: 2.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
             animation: slideUp 0.5s ease-out;
         }
 
@@ -55,6 +56,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -111,7 +113,8 @@
         }
 
         .form-control {
-            height: 48px;
+            width: 100%;
+            height: 50px;
             padding: 0.75rem 1rem 0.75rem 3rem;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
@@ -140,6 +143,7 @@
             font-size: 1.125rem;
             pointer-events: none;
             transition: color 0.3s ease;
+            z-index: 5;
         }
 
         .form-group:focus-within .form-control-icon {
@@ -190,7 +194,7 @@
 
         .btn-primary {
             width: 100%;
-            height: 48px;
+            height: 50px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             border-radius: 12px;
@@ -263,6 +267,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -312,12 +317,12 @@
             }
 
             .form-control {
-                height: 44px;
+                height: 46px;
                 font-size: 0.875rem;
             }
 
             .btn-primary {
-                height: 44px;
+                height: 46px;
             }
         }
     </style>
@@ -335,4 +340,5 @@
 
     <?= $this->renderSection('scripts') ?>
 </body>
+
 </html>

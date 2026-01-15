@@ -11,8 +11,8 @@
     </div>
 
     <!-- Title -->
-    <!-- <h1 class="auth-title">Selamat Datang</h1>
-    <p class="auth-subtitle">Silakan login untuk melanjutkan</p> -->
+    <h1 class="auth-title">Lupa Password?</h1>
+    <p class="auth-subtitle">Masukkan email Anda untuk menerima kode OTP</p>
 
     <!-- Alerts -->
     <?php if (session()->getFlashdata('success')): ?>
@@ -45,53 +45,34 @@
         </div>
     <?php endif; ?>
 
-    <!-- Login Form -->
-    <form action="<?= url_to('login.attempt') ?>" method="POST">
+    <!-- Form -->
+    <form action="<?= url_to('send_reset_otp') ?>" method="POST">
         <?= csrf_field() ?>
 
-        <!-- Username/Email Input -->
+        <!-- Email Input -->
         <div class="form-group">
-            <i class="bi bi-person form-control-icon"></i>
-            <input type="text"
-                class="form-control w-100"
-                name="login"
-                placeholder="Username atau Email"
-                value="<?= old('login') ?>"
+            <i class="bi bi-envelope form-control-icon"></i>
+            <input type="email"
+                class="form-control"
+                name="email"
+                placeholder="Email"
+                value="<?= old('email') ?>"
                 required
                 autofocus>
         </div>
 
-        <!-- Password Input -->
-        <div class="form-group">
-            <i class="bi bi-lock form-control-icon"></i>
-            <input type="password"
-                class="form-control"
-                name="password"
-                id="password"
-                placeholder="Password"
-                style="padding-right: 3rem;"
-                required>
-            <i class="bi bi-eye password-toggle" id="togglePassword" onclick="togglePassword()"></i>
-        </div>
-
-        <!-- Remember Me -->
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="rememberMe">
-            <label class="form-check-label" for="rememberMe">
-                Ingat Saya
-            </label>
-        </div>
-
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">
-            <i class="bi bi-box-arrow-in-right"></i>
-            <span>Masuk</span>
+            <i class="bi bi-send"></i>
+            <span>Kirim Kode OTP</span>
         </button>
     </form>
 
-    <!-- Forgot Password Link -->
+    <!-- Back to Login -->
     <div class="forgot-password">
-        <a href="<?= url_to('forgot_password') ?>">Lupa Password?</a>
+        <a href="<?= url_to('login') ?>">
+            <i class="bi bi-arrow-left"></i> Kembali ke Login
+        </a>
     </div>
 
     <!-- Footer -->
@@ -103,21 +84,6 @@
 
 <?= $this->section('scripts') ?>
 <script>
-    function togglePassword() {
-        const passwordInput = document.getElementById('password');
-        const toggleIcon = document.getElementById('togglePassword');
-
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            toggleIcon.classList.remove('bi-eye');
-            toggleIcon.classList.add('bi-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            toggleIcon.classList.remove('bi-eye-slash');
-            toggleIcon.classList.add('bi-eye');
-        }
-    }
-
     // Auto dismiss alerts after 5 seconds
     setTimeout(function() {
         const alerts = document.querySelectorAll('.alert');

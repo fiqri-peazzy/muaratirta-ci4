@@ -269,7 +269,7 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
                 onclick="window.location.href='<?= base_url('pasang-baru') ?>'">
                 <div class="mb-6">
                     <div class="w-20 h-20 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <img src="<?= base_url('backend/assets/images/plumbing-plumber-svgrepo-com.svg') ?>" alt="Pemasangan Baru" class="w-12 h-12">
+                        <img src="<?= base_url('frontend/images/plumbing-plumber-svgrepo-com.svg') ?>" alt="Pemasangan Baru" class="w-12 h-12">
                     </div>
                 </div>
                 <h3 class="text-xl font-display font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
@@ -294,7 +294,7 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
                 onclick="window.location.href='<?= base_url('lapor-keluhan') ?>'">
                 <div class="mb-6">
                     <div class="w-20 h-20 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <img src="<?= base_url('assets/image/icons8-complaint-100.png') ?>" alt="Lapor Keluhan" class="w-12 h-12">
+                        <img src="<?= base_url('frontend/images/chatting-conversation-contact-svgrepo-com.svg') ?>" alt="Lapor Keluhan" class="w-12 h-12">
                     </div>
                 </div>
                 <h3 class="text-xl font-display font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
@@ -319,7 +319,7 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
                 onclick="window.location.href='<?= base_url('cek-tagihan') ?>'">
                 <div class="mb-6">
                     <div class="w-20 h-20 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <img src="<?= base_url('assets/image/billing.png') ?>" alt="Cek Tagihan" class="w-12 h-12">
+                        <img src="<?= base_url('frontend/images/invoice-bill-svgrepo-com.svg') ?>" alt="Cek Tagihan" class="w-12 h-12">
                     </div>
                 </div>
                 <h3 class="text-xl font-display font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
@@ -655,22 +655,22 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
         <!-- Logo Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center" data-aos="fade-up" data-aos-delay="100">
             <div class="flex items-center justify-center p-6 bg-white rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
-                <img src="<?= base_url('assets/image/Group-17.png') ?>" alt="GriyaBayar" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
+                <img src="<?= base_url('frontend/images/Group-17.png') ?>" alt="GriyaBayar" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
             </div>
             <div class="flex items-center justify-center p-6 bg-white rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
-                <img src="<?= base_url('assets/image/Logo_Bank_BSG.png') ?>" alt="Bank BSG" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
+                <img src="<?= base_url('frontend/images/Logo_Bank_BSG.png') ?>" alt="Bank BSG" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
             </div>
             <div class="flex items-center justify-center p-6 bg-white rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
-                <img src="<?= base_url('assets/image/Group-20.png') ?>" alt="POS Indonesia" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
+                <img src="<?= base_url('frontend/images/Group-20.png') ?>" alt="POS Indonesia" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
             </div>
             <div class="flex items-center justify-center p-6 bg-white rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
-                <img src="<?= base_url('assets/image/6d348add535c3c623309ebf5c1ee0c88_brand-architecture-bukalapak-primary@2x-1.png') ?>" alt="Tokopedia" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
+                <img src="<?= base_url('frontend/images/6d348add535c3c623309ebf5c1ee0c88_brand-architecture-bukalapak-primary@2x-1.png') ?>" alt="Tokopedia" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
             </div>
             <div class="flex items-center justify-center p-6 bg-white rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
-                <img src="<?= base_url('assets/image/2560px-Bank_BTN_logo.svg.png') ?>" alt="Bank BTN" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
+                <img src="<?= base_url('frontend/images/2560px-Bank_BTN_logo.svg.png') ?>" alt="Bank BTN" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
             </div>
             <div class="flex items-center justify-center p-6 bg-white rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
-                <img src="<?= base_url('assets/image/Logo-myBCA-720x405.jpg') ?>" alt="myBCA" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
+                <img src="<?= base_url('frontend/images/Logo-myBCA-720x405.jpg') ?>" alt="myBCA" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
             </div>
         </div>
     </div>

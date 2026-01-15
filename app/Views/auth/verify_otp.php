@@ -11,8 +11,8 @@
     </div>
 
     <!-- Title -->
-    <!-- <h1 class="auth-title">Selamat Datang</h1>
-    <p class="auth-subtitle">Silakan login untuk melanjutkan</p> -->
+    <h1 class="auth-title">Verifikasi OTP</h1>
+    <p class="auth-subtitle">Masukkan kode OTP yang telah dikirim ke<br><strong><?= esc($email) ?></strong></p>
 
     <!-- Alerts -->
     <?php if (session()->getFlashdata('success')): ?>
@@ -45,53 +45,41 @@
         </div>
     <?php endif; ?>
 
-    <!-- Login Form -->
-    <form action="<?= url_to('login.attempt') ?>" method="POST">
+    <!-- Form -->
+    <form action="<?= url_to('process_verify_otp') ?>" method="POST">
         <?= csrf_field() ?>
 
-        <!-- Username/Email Input -->
+        <!-- OTP Input -->
         <div class="form-group">
-            <i class="bi bi-person form-control-icon"></i>
+            <i class="bi bi-shield-lock form-control-icon"></i>
             <input type="text"
-                class="form-control w-100"
-                name="login"
-                placeholder="Username atau Email"
-                value="<?= old('login') ?>"
+                class="form-control"
+                name="otp"
+                id="otp"
+                placeholder="Masukkan 6 digit kode OTP"
+                maxlength="6"
+                pattern="[0-9]{6}"
+                style="text-align: center; font-size: 24px; letter-spacing: 8px; font-weight: 700;"
                 required
                 autofocus>
         </div>
 
-        <!-- Password Input -->
-        <div class="form-group">
-            <i class="bi bi-lock form-control-icon"></i>
-            <input type="password"
-                class="form-control"
-                name="password"
-                id="password"
-                placeholder="Password"
-                style="padding-right: 3rem;"
-                required>
-            <i class="bi bi-eye password-toggle" id="togglePassword" onclick="togglePassword()"></i>
-        </div>
-
-        <!-- Remember Me -->
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="rememberMe">
-            <label class="form-check-label" for="rememberMe">
-                Ingat Saya
-            </label>
-        </div>
+        <p style="text-align: center; color: #718096; font-size: 13px; margin-bottom: 20px;">
+            <i class="bi bi-clock"></i> Kode OTP berlaku selama 15 menit
+        </p>
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">
-            <i class="bi bi-box-arrow-in-right"></i>
-            <span>Masuk</span>
+            <i class="bi bi-check-circle"></i>
+            <span>Verifikasi OTP</span>
         </button>
     </form>
 
-    <!-- Forgot Password Link -->
+    <!-- Resend OTP -->
     <div class="forgot-password">
-        <a href="<?= url_to('forgot_password') ?>">Lupa Password?</a>
+        <a href="<?= url_to('forgot_password') ?>">
+            <i class="bi bi-arrow-clockwise"></i> Kirim Ulang Kode OTP
+        </a>
     </div>
 
     <!-- Footer -->
@@ -103,22 +91,7 @@
 
 <?= $this->section('scripts') ?>
 <script>
-    function togglePassword() {
-        const passwordInput = document.getElementById('password');
-        const toggleIcon = document.getElementById('togglePassword');
-
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            toggleIcon.classList.remove('bi-eye');
-            toggleIcon.classList.add('bi-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            toggleIcon.classList.remove('bi-eye-slash');
-            toggleIcon.classList.add('bi-eye');
-        }
-    }
-
-    // Auto dismiss alerts after 5 seconds
+    // Auto dismiss alerts
     setTimeout(function() {
         const alerts = document.querySelectorAll('.alert');
         alerts.forEach(function(alert) {
@@ -126,5 +99,10 @@
             bsAlert.close();
         });
     }, 5000);
+
+    // Auto format OTP input (numbers only)
+    document.getElementById('otp').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
 </script>
 <?= $this->endSection() ?>
