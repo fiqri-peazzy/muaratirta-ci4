@@ -322,11 +322,11 @@ class Auth extends BaseController
         $email = $this->session->get('reset_email');
         $password = $this->request->getPost('password');
 
-        // Update password
+        // Update password (UserModel will hash it automatically via beforeUpdate callback)
         $user = $this->userModel->where('email', $email)->first();
         if ($user) {
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-            $this->userModel->update($user->id, ['password' => $hashedPassword]);
+            // Just pass the plain password, UserModel will hash it
+            $this->userModel->update($user->id, ['password' => $password]);
 
             // Delete reset token
             $passwordResetModel = new \App\Models\PasswordResetModel();
