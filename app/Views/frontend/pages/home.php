@@ -403,11 +403,14 @@ PERUMDA Air Minum Muara Tirta Kota Gorontalo - Menyediakan Air Bersih Berkualita
             </div>
 
             <!-- Right Visual -->
-            <div data-aos="fade-left" class="relative">
-                <img
-                    src="<?= base_url('assets/image/customer-service-illustration.png') ?>"
-                    alt="Customer Service"
-                    class="w-full h-auto rounded-3xl shadow-2xl">
+            <div data-aos="fade-left">
+                <div class="modern-about-animation-wrapper">
+                    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js" type="module"></script>
+                    <dotlottie-wc
+                        src="https://lottie.host/37db8280-9322-46aa-bc59-35ea54e21ca0/OyrSOjvXRC.lottie"
+                        background="transparent" speed="1" style="width: 100%; height: 100%;" autoplay loop>
+                    </dotlottie-wc>
+                </div>
             </div>
         </div>
     </div>

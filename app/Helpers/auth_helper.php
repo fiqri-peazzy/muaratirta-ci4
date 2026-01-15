@@ -124,7 +124,7 @@ if (!function_exists('profile_picture')) {
         $session = \Config\Services::session();
         $profilePict = $session->get('profile_pict') ?? 'default.png';
 
-        return base_url('uploads/profiles/' . $profilePict);
+        return base_url('uploads/profile/' . $profilePict);
     }
 }
 

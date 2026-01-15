@@ -62,6 +62,8 @@ $routes->group('', ['filter' => 'auth', 'namespace' => 'App\Controllers'], funct
         $routes->post('toggle-status/(:num)', 'Users::toggleStatus/$1', ['as' => 'users.toggle_status']);
     });
 
+
+
     // Pengaduan (Admin & CS)
     $routes->group('pengaduan', ['filter' => 'auth:1,2'], function ($routes) {
         $routes->get('', 'Pengaduan::index', ['as' => 'pengaduan.index']);
@@ -104,6 +106,32 @@ $routes->group('', ['filter' => 'auth', 'namespace' => 'App\Controllers'], funct
         // AJAX routes
         $routes->post('upload-image', 'Artikel::uploadImage', ['as' => 'artikel.upload_image']);
         $routes->post('delete-galeri/(:num)', 'Artikel::deleteGaleriImage/$1', ['as' => 'artikel.delete_galeri']);
+    });
+
+    // Struktur Organisasi (Admin Only)
+    $routes->group('organisasi', ['filter' => 'auth:1'], function ($routes) {
+        // Tingkat Jabatan
+        $routes->get('tingkat-jabatan', 'Organisasi::tingkatJabatan', ['as' => 'organisasi.tingkat_jabatan']);
+        $routes->post('tingkat-jabatan/store', 'Organisasi::tingkatJabatanStore', ['as' => 'organisasi.tingkat_jabatan.store']);
+        $routes->post('tingkat-jabatan/update/(:num)', 'Organisasi::tingkatJabatanUpdate/$1', ['as' => 'organisasi.tingkat_jabatan.update']);
+        $routes->get('tingkat-jabatan/delete/(:num)', 'Organisasi::tingkatJabatanDelete/$1', ['as' => 'organisasi.tingkat_jabatan.delete']);
+
+        // Bagian
+        $routes->get('bagian', 'Organisasi::bagian', ['as' => 'organisasi.bagian']);
+        $routes->get('bagian/create', 'Organisasi::bagianCreate', ['as' => 'organisasi.bagian.create']);
+        $routes->post('bagian/store', 'Organisasi::bagianStore', ['as' => 'organisasi.bagian.store']);
+        $routes->get('bagian/edit/(:num)', 'Organisasi::bagianEdit/$1', ['as' => 'organisasi.bagian.edit']);
+        $routes->post('bagian/update/(:num)', 'Organisasi::bagianUpdate/$1', ['as' => 'organisasi.bagian.update']);
+        $routes->get('bagian/delete/(:num)', 'Organisasi::bagianDelete/$1', ['as' => 'organisasi.bagian.delete']);
+
+        // Staff Organisasi
+        $routes->get('staff', 'Organisasi::staff', ['as' => 'organisasi.staff']);
+        $routes->get('staff/create', 'Organisasi::staffCreate', ['as' => 'organisasi.staff.create']);
+        $routes->post('staff/store', 'Organisasi::staffStore', ['as' => 'organisasi.staff.store']);
+        $routes->get('staff/edit/(:num)', 'Organisasi::staffEdit/$1', ['as' => 'organisasi.staff.edit']);
+        $routes->post('staff/update/(:num)', 'Organisasi::staffUpdate/$1', ['as' => 'organisasi.staff.update']);
+        $routes->get('staff/delete/(:num)', 'Organisasi::staffDelete/$1', ['as' => 'organisasi.staff.delete']);
+        $routes->post('staff/toggle-status/(:num)', 'Organisasi::staffToggleStatus/$1', ['as' => 'organisasi.staff.toggle_status']);
     });
 
     $routes->group('settings', ['filter' => 'auth:1'], function ($routes) {

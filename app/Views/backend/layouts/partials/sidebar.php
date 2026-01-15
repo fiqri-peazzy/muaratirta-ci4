@@ -2,6 +2,7 @@
 helper('auth');
 $currentUri = service('uri');
 $segment1 = $currentUri->getSegment(1);
+$segment2 = $currentUri->getSegment(2);
 ?>
 
 <div id="sidebar">
@@ -10,7 +11,7 @@ $segment1 = $currentUri->getSegment(1);
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
                     <a href="<?= base_url('/dashboard') ?>">
-                        <img src="<?= base_url('backend/assets/compiled/svg/logo.svg') ?>" alt="Logo">
+                        <img src="<?= base_url('backend/assets/images/logo/logo.svg') ?>" alt="Logo">
                     </a>
                 </div>
                 <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
@@ -82,6 +83,24 @@ $segment1 = $currentUri->getSegment(1);
                             <i class="bi bi-gear-fill"></i>
                             <span>Pengaturan</span>
                         </a>
+                    </li>
+
+                    <li class="sidebar-item has-sub <?= in_array($segment1, ['organisasi']) ? 'active' : '' ?>">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-diagram-3-fill"></i>
+                            <span>Struktur Organisasi</span>
+                        </a>
+                        <ul class="submenu <?= in_array($segment1, ['organisasi']) ? 'active' : '' ?>">
+                            <li class="submenu-item <?= $segment1 == 'organisasi' && $segment2 == 'staff' ? 'active' : '' ?>">
+                                <a href="<?= base_url('/organisasi/staff') ?>" class="submenu-link">Staff Organisasi</a>
+                            </li>
+                            <li class="submenu-item <?= $segment1 == 'organisasi' && $segment2 == 'bagian' ? 'active' : '' ?>">
+                                <a href="<?= base_url('/organisasi/bagian') ?>" class="submenu-link">Bagian/Divisi</a>
+                            </li>
+                            <li class="submenu-item <?= $segment1 == 'organisasi' && $segment2 == 'tingkat-jabatan' ? 'active' : '' ?>">
+                                <a href="<?= base_url('/organisasi/tingkat-jabatan') ?>" class="submenu-link">Tingkat Jabatan</a>
+                            </li>
+                        </ul>
                     </li>
                 <?php endif; ?>
 
