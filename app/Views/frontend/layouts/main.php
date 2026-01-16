@@ -10,6 +10,14 @@
     <!-- Favicon -->
     <link href="<?= base_url('assets/logo/Logo-PDAM-MT-min.ico') ?>" rel="icon">
 
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PDAM MT">
+    <link rel="apple-touch-icon" href="<?= base_url('backend/assets/images/logo/logo.png') ?>">
+    <link rel="manifest" href="<?= base_url('manifest.json') ?>">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,6 +109,10 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- PWA Manager -->
+    <script src="<?= base_url('pwa-manager.js') ?>"></script>
+
     <?= $this->renderSection('scripts') ?>
 
 </body>

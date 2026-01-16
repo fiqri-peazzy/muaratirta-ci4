@@ -1,0 +1,90 @@
+{
+  "name": "PERUMDA Air Minum Muara Tirta",
+  "short_name": "PDAM MT",
+  "description": "Aplikasi layanan PERUMDA Air Minum Muara Tirta Kota Gorontalo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "id-ID",
+  "dir": "ltr",
+  "categories": ["utilities", "government"],
+  "icons": [
+    {
+      "src": "/backend/assets/images/logo/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/backend/assets/images/logo/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/backend/assets/images/screenshot-mobile.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/backend/assets/images/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Lapor Keluhan",
+      "short_name": "Keluhan",
+      "description": "Laporkan keluhan layanan air",
+      "url": "/lapor-keluhan",
+      "icons": [
+        {
+          "src": "/backend/assets/images/logo/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Cek Tagihan",
+      "short_name": "Tagihan",
+      "description": "Cek tagihan air bulanan",
+      "url": "/tagihan",
+      "icons": [
+        {
+          "src": "/backend/assets/images/logo/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Pasang Baru",
+      "short_name": "Pasang Baru",
+      "description": "Daftar pemasangan baru",
+      "url": "/pasang-baru",
+      "icons": [
+        {
+          "src": "/backend/assets/images/logo/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/lapor-keluhan",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

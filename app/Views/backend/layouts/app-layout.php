@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,15 @@
     <title><?= $title ?? 'Dashboard' ?> - PERUMDA AIR MINUM MUARA TIRTA</title>
 
     <link rel="shortcut icon" href="<?= base_url('backend/assets/compiled/svg/favicon.svg') ?>" type="image/x-icon">
-    
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PDAM MT Admin">
+    <link rel="apple-touch-icon" href="<?= base_url('backend/assets/images/logo/logo.png') ?>">
+    <link rel="manifest" href="<?= base_url('manifest.json') ?>">
+
     <!-- Mazer CSS -->
     <link rel="stylesheet" href="<?= base_url('backend/assets/compiled/css/app.css') ?>">
     <link rel="stylesheet" href="<?= base_url('backend/assets/compiled/css/app-dark.css') ?>">
@@ -36,7 +45,7 @@
 
 <body>
     <script src="<?= base_url('backend/assets/static/js/initTheme.js') ?>"></script>
-    
+
     <div id="app">
         <!-- Sidebar -->
         <?= $this->include('backend/layouts/partials/sidebar') ?>
@@ -102,6 +111,9 @@
     <!-- Additional JS -->
     <?= $this->renderSection('scripts') ?>
 
+    <!-- PWA Manager -->
+    <script src="<?= base_url('pwa-manager.js') ?>"></script>
+
     <script>
         // Auto dismiss alerts after 5 seconds
         setTimeout(function() {
@@ -113,4 +125,5 @@
         }, 5000);
     </script>
 </body>
+
 </html>
